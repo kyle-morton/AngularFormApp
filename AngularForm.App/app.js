@@ -1,4 +1,6 @@
-﻿angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
+﻿'use strict';
+
+angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants) {
 
         $urlRouterProvider.otherwise('/home');
@@ -7,6 +9,14 @@
             navBar: {
                 templateUrl: '/App/navBar/html/navBar.html',
                 controller: 'NavBarController'
+            },
+            navButtons: {
+                templateUrl: '/App/navButtons/html/navButtons.html',
+                controller: 'NavButtonsController'
+            },
+            statusSummary: {
+                templateUrl: '/App/statusSummary/html/statusSummary.html',
+                controller: 'StatusSummaryController'
             }
         };
 
@@ -24,6 +34,9 @@
                 url: '/personalInfo',
                 views: angular.extend({}, reusableViewBase, {
                     contentView: {
+                        templateUrl: 'App/form/html/formContainer.html'
+                    },
+                    'formContent@contentView': {
                         templateUrl: 'App/form/html/personalInfo.html',
                         controller: 'PersonalInformationController'
                     }

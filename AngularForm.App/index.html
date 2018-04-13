@@ -11,10 +11,7 @@
 <body ng-app="AngularFormApp">
 
     <div ui-view="navBar"></div>
-    <br />
-    <br />
-    <br />
-    <div ui-view="contentView"></div>
+    <div class="container" ui-view="contentView" style="margin-top: 70px;"></div>
 
     <!--<div ui-view="homeView"></div>-->
     <!-- Bootstrap, Jquery -->
@@ -24,16 +21,7 @@
     <!-- Angular -->
     <script src="assets/scripts/angular.min.js"></script>
     <script src="assets/scripts/angular-ui-router.min.js"></script>
-    <script src="app.js"></script>
-    <script src="Constants/constants.js"></script>
-    <script src="Services/api.js"></script>
-    <script src="Services/navigation.js"></script>
-    <script src="Services/storage.js"></script>
-    <script src="App/home/js/controllers/home.js"></script>
-    <script src="App/form/js/controllers/form.js"></script>
-    <script src="App/form/js/controllers/personalInfo.js"></script>
-    <script src="App/navBar/js/controllers/navBar.js"></script>
-
+    <script src="bundle.js"></script>
 
 </body>
 </html>

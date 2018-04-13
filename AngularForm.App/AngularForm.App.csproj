@@ -68,13 +68,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bundleconfig.json" />
     <None Include="packages.config" />
+    <Content Include="App\form\html\formContainer.html" />
     <Content Include="App\form\js\controllers\form.js" />
     <Content Include="App\form\js\controllers\personalInfo.js" />
     <Content Include="App\navBar\html\navBar.html" />
     <Content Include="App\navBar\js\controllers\navBar.js" />
+    <Content Include="App\navButtons\html\navButtons.html" />
+    <Content Include="App\navButtons\js\navButtons.js" />
+    <Content Include="App\statusSummary\html\statusSummary.html" />
+    <Content Include="App\statusSummary\js\statusSummary.js" />
     <Content Include="assets\scripts\angular-ui-router.js" />
     <Content Include="assets\scripts\angular-ui-router.min.js" />
+    <Content Include="bundle.js" />
+    <Content Include="bundle.min.js">
+      <DependentUpon>bundle.js</DependentUpon>
+    </Content>
     <Content Include="Services\api.js" />
     <Content Include="Services\navigation.js" />
     <Content Include="Services\storage.js" />

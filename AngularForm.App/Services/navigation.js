@@ -3,7 +3,7 @@
 
         this.getNextStep = function (currentStep) {
 
-            console.log('Getting Next Step: ' + currentStep)
+            console.log('Getting Next Step: ' + currentStep);
 
             //return constant object
         };
