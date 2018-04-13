@@ -1,5 +1,5 @@
 ﻿angular.module('AngularFormApp')
-    .service('NavigationService', function (appConstants) {
+    .service('NavigationService', function (appConstants, $state) {
 
         this.getNextStep = function (currentStep) {
 
@@ -7,5 +7,8 @@
 
             //return constant object
         };
+        this.go = function(state, stateObj) {
+            $state.go(state, stateObj);
+        }
 
     });

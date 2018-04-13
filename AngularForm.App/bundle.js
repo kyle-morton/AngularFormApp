@@ -9,7 +9,11 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
             navBar: {
                 templateUrl: '/App/navBar/html/navBar.html',
                 controller: 'NavBarController'
-            },
+            }
+        };
+
+        var reusableFormBase = angular.extend({}, reusableViewBase,
+        {
             navButtons: {
                 templateUrl: '/App/navButtons/html/navButtons.html',
                 controller: 'NavButtonsController'
@@ -18,37 +22,50 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
                 templateUrl: '/App/statusSummary/html/statusSummary.html',
                 controller: 'StatusSummaryController'
             }
-        };
+        });
 
         $stateProvider
-            .state('home', {
-                url: '/home',
-                views: angular.extend({}, reusableViewBase, {
-                    contentView: {
-                        templateUrl: 'App/home/html/home.html',
-                        controller: 'HomeController'
-                    }
+            .state('home',
+                {
+                    url: '/home',
+                    views: angular.extend({},
+                        reusableViewBase,
+                        {
+                            contentView: {
+                                templateUrl: 'App/home/html/home.html',
+                                controller: 'HomeController'
+                            }
+                        })
                 })
-            })
             .state(appConstants.FORM.STEP1.KEY, {
-                url: '/personalInfo',
-                views: angular.extend({}, reusableViewBase, {
+                url: '/form',
+                views: angular.extend({}, reusableFormBase, {
                     contentView: {
-                        templateUrl: 'App/form/html/formContainer.html'
-                    },
-                    'formContent@contentView': {
                         templateUrl: 'App/form/html/personalInfo.html',
                         controller: 'PersonalInformationController'
                     }
                 })
-            });
+            })
+            .state(appConstants.FORM.STEP2.KEY, {
+                url: '/form',
+                views: angular.extend({}, reusableViewBase, {
+                    contentView: {
+                        templateUrl: 'App/form/html/address.html',
+                        controller: 'AddressController'
+                    }
+                })
+            })
             
 
         $locationProvider.hashPrefix('');
+        //$locationProvider.html5Mode(true);
+
     });
 angular.module('AngularFormApp')
     .constant('appConstants', {
         API_URL: 'http://localhost:61109/api/form/',
+        STATE_KEY: 'appState',
+        FORM_KEY: 'formState',
         HOME: {
             KEY: 'home'
         },
@@ -94,7 +111,7 @@ angular.module('AngularFormApp')
 
     });
 angular.module('AngularFormApp')
-    .service('NavigationService', function (appConstants) {
+    .service('NavigationService', function (appConstants, $state) {
 
         this.getNextStep = function (currentStep) {
 
@@ -102,9 +119,25 @@ angular.module('AngularFormApp')
 
             //return constant object
         };
+        this.go = function(state, stateObj) {
+            $state.go(state, stateObj);
+        }
 
     });
+angular.module('AngularFormApp')
+    .service('StorageService', function ($window) {
 
+        this.getItem = function(key) {
+            return $window.localStorage.getItem(key);
+        }
+        this.setItem = function(key, value) {
+            $window.localStorage.setItem(key, value);
+        }
+        this.clearItem = function(key) {
+            $window.localStorage.removeItem(key, null);
+        }
+
+    });
 angular.module('AngularFormApp')
     .controller('StatusSummaryController', function ($scope, $state, appConstants) {
 
@@ -142,18 +175,25 @@ angular.module('AngularFormApp')
 
     });
 angular.module('AngularFormApp')
-    .controller('PersonalInformationController', function ($scope, NavigationService) {
+    .controller('PersonalInformationController', function ($scope, appConstants, StorageService, NavigationService) {
 
-        console.log('PIC + service: ' + NavigationService);
+        $scope.isFormValid = true;
 
+        var existingForm = StorageService.getItem(appConstants.FORM_KEY);
+        $scope.form = existingForm ? JSON.parse(existingForm) : {};
+
+        $scope.submit = function() {
+
+            //if ($scope.isFormValid) {
+            StorageService.setItem(appConstants.FORM_KEY, JSON.stringify($scope.form));
+            NavigationService.go(appConstants.FORM.STEP2.KEY);
+            //}
+
+        };
     });
 angular.module('AngularFormApp')
-    .controller('FormController', function ($scope, formApiFactory) {
+    .controller('AddressController', function ($scope, NavigationService) {
 
-        $scope.errorMessage = "";
-        $scope.data = {};
-        $scope.loading = false;
-
-
+        console.log('AC + service: ' + NavigationService);
 
     });

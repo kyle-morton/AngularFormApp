@@ -12,7 +12,7 @@
       "App/navBar/js/controllers/navBar.js",
       "App/home/js/controllers/home.js",
       "App/form/js/controllers/personalInfo.js",
-      "App/form/js/controllers/form.js"
+      "App/form/js/controllers/address.js"
     ]
   }
 ]

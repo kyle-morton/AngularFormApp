@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Form Application</title>
+    <base href="/">
 
     <link href="assets/content/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/styles/app.css" rel="stylesheet" />
@@ -10,10 +11,19 @@
 </head>
 <body ng-app="AngularFormApp">
 
-    <div ui-view="navBar"></div>
-    <div class="container" ui-view="contentView" style="margin-top: 70px;"></div>
+<div ui-view="navBar"></div>
 
-    <!--<div ui-view="homeView"></div>-->
+<div class="container" style="margin-top: 70px;">
+
+    <div ui-view="statusSummary"></div>
+
+    <div ui-view="contentView"></div>
+
+    <div ui-view="navButtons"></div>
+
+</div>    
+
+<!--<div ui-view="homeView"></div>-->
     <!-- Bootstrap, Jquery -->
     <script src="assets/scripts/jquery-3.3.1.min.js"></script>
     <script src="assets/content/bootstrap/bootstrap.min.js"></script>

@@ -1,6 +1,8 @@
 ﻿angular.module('AngularFormApp')
     .constant('appConstants', {
         API_URL: 'http://localhost:61109/api/form/',
+        STATE_KEY: 'appState',
+        FORM_KEY: 'formState',
         HOME: {
             KEY: 'home'
         },

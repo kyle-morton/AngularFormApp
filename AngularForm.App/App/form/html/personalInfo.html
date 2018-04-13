@@ -1,19 +1,27 @@
-﻿<!--<div>
-    
-    <div ui-view="statusSummary"></div>-->
+﻿<div>
 
     <h3>Personal Info</h3>
     <hr/>
 
     <div class="form-group">
-        <label for="formGroupExampleInput">Example label</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+        <label>First Name</label>
+        <input type="text" class="form-control" placeholder="first name" ng-model="form.firstName">
     </div>
     <div class="form-group">
-        <label for="formGroupExampleInput2">Another label</label>
-        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+        <label>Last Name</label>
+        <input type="text" class="form-control" placeholder="last name" ng-model="form.lastName">
+    </div>
+    <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="text" class="form-control" placeholder="MM/DD/YYYY" ng-model="form.dateOfBirth">
     </div>
     
-    <div ui-view="navButtons"></div>
+    <!--<div ui-view="navButtons"></div>-->
     
-<!--</div>-->
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" ng-if="isFormValid === true" ng-click="submit();">Next</button>
+        </div>
+    </div>
+
+</div>
