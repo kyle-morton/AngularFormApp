@@ -153,7 +153,10 @@ angular.module('AngularFormApp')
 angular.module('AngularFormApp')
     .controller('NavBarController', function ($scope, $state, appConstants) {
 
-        console.log('navbar init...');
+        var currentState = $state.current.name;
+        console.log('key/state: ' + appConstants.HOME.KEY + '/' + currentState);
+        $scope.isHome = appConstants.HOME.KEY === currentState;
+        //$scope.isHome = currentState
 
         $scope.goToHome = function () {
             $state.go(appConstants.HOME.KEY, {});
@@ -194,6 +197,13 @@ angular.module('AngularFormApp')
 angular.module('AngularFormApp')
     .controller('AddressController', function ($scope, NavigationService) {
 
-        console.log('AC + service: ' + NavigationService);
+        $scope.isFormValid = true;
+        $scope.back = function() {
+            console.log('back...');
+        }
+        $scope.submit = function() {
+            console.log('submit...');
+        }
+
 
     });

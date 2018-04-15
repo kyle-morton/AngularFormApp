@@ -1,14 +1,14 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand pointer" ng-click="go('home');">Fixed navbar</a>
+    <a class="navbar-brand pointer" ng-click="goToHome();">Angular Form</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item" ng-class="{active: isHome === true}">
                 <a class="nav-link pointer" ng-click="goToHome();">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" ng-class="{active: isHome === false}">
                 <a class="nav-link pointer" ng-click="goToFormStart();">New Form</a>
             </li>
         </ul>

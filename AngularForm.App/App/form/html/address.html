@@ -1,5 +1,32 @@
 ﻿<div>
-    <h3>Address!</h3>
-    <h5 ng-bind="message"></h5>
-    <a ng-click="click()">Click Me</a>
+
+    <h3>Address</h3>
+    <hr />
+
+    <div class="form-group">
+        <label>Street</label>
+        <input type="text" class="form-control" placeholder="street" ng-model="form.Address.Street">
+    </div>
+    <div class="form-group">
+        <label>City</label>
+        <input type="text" class="form-control" placeholder="city" ng-model="form.Address.City">
+    </div>
+    <div class="form-group">
+        <label>City</label>
+        <input type="text" class="form-control" placeholder="state" ng-model="form.Address.State" maxlength="2">
+    </div>
+    <div class="form-group">
+        <label>Zip Code</label>
+        <input type="text" class="form-control" placeholder="zip code" ng-model="form.Address.Zip" maxlength="5">
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-secondary" ng-click="back();">Back</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" ng-if="isFormValid === true" ng-click="submit();">Next</button>
+        </div>
+    </div>
+
 </div>
