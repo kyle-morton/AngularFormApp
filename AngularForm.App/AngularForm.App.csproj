@@ -73,8 +73,7 @@
     <Content Include="App\form\html\personalInfo.min.html">
       <DependentUpon>personalInfo.html</DependentUpon>
     </Content>
-    <Content Include="App\form\js\controllers\address.js" />
-    <Content Include="App\form\js\controllers\personalInfo.js" />
+    <Content Include="App\form\js\controllers\form.js" />
     <Content Include="App\navBar\html\navBar.html" />
     <Content Include="App\navBar\js\controllers\navBar.js" />
     <Content Include="App\navButtons\html\navButtons.html" />
@@ -83,11 +82,12 @@
     <Content Include="App\statusSummary\js\statusSummary.js" />
     <Content Include="assets\scripts\angular-ui-router.js" />
     <Content Include="assets\scripts\angular-ui-router.min.js" />
+    <Content Include="assets\scripts\sweetalert.min.js" />
     <Content Include="bundle.js" />
     <Content Include="bundle.min.js">
       <DependentUpon>bundle.js</DependentUpon>
     </Content>
-    <Content Include="Services\api.js" />
+    <Content Include="Services\form.js" />
     <Content Include="Services\navigation.js" />
     <Content Include="Services\storage.js" />
     <Content Include="assets\scripts\angular-route.js" />

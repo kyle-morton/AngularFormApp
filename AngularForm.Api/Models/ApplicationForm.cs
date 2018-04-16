@@ -16,7 +16,7 @@ namespace AngularForm.Api.Models
         //section 1
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDay { get; set; }
+        public string DateOfBirth { get; set; }
         //section 2
         public Address Address { get; set; }
         //section 3

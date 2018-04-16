@@ -37,21 +37,33 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
                             }
                         })
                 })
-            .state(appConstants.FORM.STEP1.KEY, {
+            .state(appConstants.FORM[0].KEY, {
                 url: '/form',
+                bannerTitle: appConstants.FORM[0].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/personalInfo.html',
-                        controller: 'PersonalInformationController'
+                        controller: 'FormController'
                     }
                 })
             })
-            .state(appConstants.FORM.STEP2.KEY, {
+            .state(appConstants.FORM[1].KEY, {
                 url: '/form',
+                bannerTitle: appConstants.FORM[1].TITLE,
                 views: angular.extend({}, reusableViewBase, {
                     contentView: {
                         templateUrl: 'App/form/html/address.html',
-                        controller: 'AddressController'
+                        controller: 'FormController'
+                    }
+                })
+            })
+            .state(appConstants.FORM[2].KEY, {
+                url: '/form',
+                bannerTitle: appConstants.FORM[2].TITLE,
+                views: angular.extend({}, reusableViewBase, {
+                    contentView: {
+                        templateUrl: 'App/form/html/education.html',
+                        controller: 'FormController'
                     }
                 })
             })
@@ -69,56 +81,54 @@ angular.module('AngularFormApp')
         HOME: {
             KEY: 'home'
         },
-        FORM: {
-            STEP1: {
+        FORM: [
+            {
                 KEY: 'personalInfo',
                 TITLE: 'Personal Information',
                 IS_START: true
             }, 
-            STEP2: {
+            {
                 KEY: 'address',
                 TITLE: 'Address',
             },
-            STEP3: {
+            {
                 KEY: 'education',
                 TITLE: 'Education',
                 IS_END: true
             }
-        }
+        ]
     });
 
-angular.module('AngularFormApp')
-    .factory('formApiFactory', function ($http, $q, appConstants) {
-
-        var apiFactory = {};
-
-        apiFactory.submit = function () {
-             
-        };
-
-        apiFactory.get = function (id) {
-
-        };
-
-        apiFactory.getAll = function () {
-            return $http({
-                method: 'GET',
-                url: appConstants.API_URL + 'GetAll'
-            });
-        };
-
-        return apiFactory;
-
-    });
 angular.module('AngularFormApp')
     .service('NavigationService', function (appConstants, $state) {
 
-        this.getNextStep = function (currentStep) {
+        this.isStart = function () {
+            var current = $state.current.name;
+            var index = appConstants.FORM.map(function (e) { return e.IS_START; }).indexOf(true);
+            return current === appConstants.FORM[index].KEY;
+        }
+        this.goToStart = function () {
+            var index = appConstants.FORM.map(function (e) { return e.IS_START; }).indexOf(true);
+            this.go(appConstants.FORM[index].KEY);
+        }
+        this.getNextState = function () {
+            var current = $state.current.name;
+            var index = appConstants.FORM.map(function (e) { return e.KEY; }).indexOf(current);
 
-            console.log('Getting Next Step: ' + currentStep);
+            if (appConstants.FORM[index].IS_END)
+                return null;
 
-            //return constant object
-        };
+            return appConstants.FORM[index+1].KEY;
+        }
+        this.getPreviousState = function () {
+            var current = $state.current.name;
+            var index = appConstants.FORM.map(function (e) { return e.KEY; }).indexOf(current);
+
+            if (appConstants.FORM[index].IS_START)
+                return null;
+
+            return appConstants.FORM[index - 1].KEY;
+        }
         this.go = function(state, stateObj) {
             $state.go(state, stateObj);
         }
@@ -135,6 +145,37 @@ angular.module('AngularFormApp')
         }
         this.clearItem = function(key) {
             $window.localStorage.removeItem(key, null);
+        }
+
+    });
+angular.module('AngularFormApp')
+    .service('FormService', function (appConstants, StorageService, $http, $q) {
+
+        this.getForm = function () {
+            var formStr = StorageService.getItem(appConstants.FORM_KEY);
+            return formStr ? JSON.parse(formStr) : null;
+        }
+        this.setForm = function (form) {
+            StorageService.setItem(appConstants.FORM_KEY, JSON.stringify(form));
+        }
+        this.clearForm = function () {
+            StorageService.clearItem(appConstants.FORM_KEY);
+        }
+
+
+        //API
+        this.submit = function (form) {
+            return $http({
+                method: 'POST',
+                url: appConstants.API_URL + 'Submit',
+                data: JSON.stringify(form)
+            });
+        }
+        this.getAll = function () {
+            return $http({
+                method: 'GET',
+                url: appConstants.API_URL + 'GetAll'
+            });
         }
 
     });
@@ -163,12 +204,12 @@ angular.module('AngularFormApp')
         };
 
         $scope.goToFormStart = function () {
-            $state.go(appConstants.FORM.STEP1.KEY, {});
+            $state.go(appConstants.FORM[0].KEY, {});
         };
 
     });
 angular.module('AngularFormApp')
-    .controller('HomeController', function ($scope, formApiFactory) {
+    .controller('HomeController', function ($scope) {
 
         $scope.errorMessage = "";
         $scope.data = {};
@@ -178,32 +219,37 @@ angular.module('AngularFormApp')
 
     });
 angular.module('AngularFormApp')
-    .controller('PersonalInformationController', function ($scope, appConstants, StorageService, NavigationService) {
+    .controller('FormController', function ($scope, FormService, NavigationService) {
 
         $scope.isFormValid = true;
 
-        var existingForm = StorageService.getItem(appConstants.FORM_KEY);
-        $scope.form = existingForm ? JSON.parse(existingForm) : {};
+        $scope.isStart = NavigationService.isStart();
+        $scope.form = FormService.getForm();
 
-        $scope.submit = function() {
-
-            //if ($scope.isFormValid) {
-            StorageService.setItem(appConstants.FORM_KEY, JSON.stringify($scope.form));
-            NavigationService.go(appConstants.FORM.STEP2.KEY);
-            //}
-
-        };
-    });
-angular.module('AngularFormApp')
-    .controller('AddressController', function ($scope, NavigationService) {
-
-        $scope.isFormValid = true;
-        $scope.back = function() {
-            console.log('back...');
+        //go to start if no form & not on starting step
+        if (!$scope.isStart) {
+            if (!$scope.form) 
+                NavigationService.goToStart();
         }
-        $scope.submit = function() {
-            console.log('submit...');
-        }
+        $scope.form = $scope.form ? $scope.form : {};
 
+        $scope.back = function () {
+            var prevState = NavigationService.getPreviousState();
+            NavigationService.go(prevState);
+        }
+        $scope.submit = function () {
+
+            if ($scope.isFormValid) {
+                FormService.setForm($scope.form);
+                var nextState = NavigationService.getNextState();
+
+                if (nextState)
+                    NavigationService.go(nextState);
+                else {
+                    FormService.submit($scope.form);
+                    console.log('submit form via API...');
+                }
+            }
+        }
 
     });

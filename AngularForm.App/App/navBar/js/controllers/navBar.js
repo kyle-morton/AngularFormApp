@@ -11,7 +11,7 @@
         };
 
         $scope.goToFormStart = function () {
-            $state.go(appConstants.FORM.STEP1.KEY, {});
+            $state.go(appConstants.FORM[0].KEY, {});
         };
 
     });

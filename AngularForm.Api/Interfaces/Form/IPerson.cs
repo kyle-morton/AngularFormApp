@@ -12,7 +12,7 @@ namespace AngularForm.Api.Interfaces.Form
 
         string FirstName { get; set; }
         string LastName { get; set; }
-        DateTime BirthDay { get; set; }
+        string DateOfBirth { get; set; }
         Address Address { get; set; }
 
     }

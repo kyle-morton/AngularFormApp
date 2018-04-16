@@ -37,21 +37,33 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
                             }
                         })
                 })
-            .state(appConstants.FORM.STEP1.KEY, {
+            .state(appConstants.FORM[0].KEY, {
                 url: '/form',
+                bannerTitle: appConstants.FORM[0].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/personalInfo.html',
-                        controller: 'PersonalInformationController'
+                        controller: 'FormController'
                     }
                 })
             })
-            .state(appConstants.FORM.STEP2.KEY, {
+            .state(appConstants.FORM[1].KEY, {
                 url: '/form',
+                bannerTitle: appConstants.FORM[1].TITLE,
                 views: angular.extend({}, reusableViewBase, {
                     contentView: {
                         templateUrl: 'App/form/html/address.html',
-                        controller: 'AddressController'
+                        controller: 'FormController'
+                    }
+                })
+            })
+            .state(appConstants.FORM[2].KEY, {
+                url: '/form',
+                bannerTitle: appConstants.FORM[2].TITLE,
+                views: angular.extend({}, reusableViewBase, {
+                    contentView: {
+                        templateUrl: 'App/form/html/education.html',
+                        controller: 'FormController'
                     }
                 })
             })

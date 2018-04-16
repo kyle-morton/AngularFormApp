@@ -54,7 +54,7 @@ namespace AngularForm.Api.Services
                 ModifyDate = DateTime.Now.AddDays(-1),
                 FirstName = "Kyle",
                 LastName = "Morton",
-                BirthDay = DateTime.Parse("07/22/1991"),
+                DateOfBirth = "07/22/1991",
                 Address = new Address
                 {
                     Street = "123 Main Street",

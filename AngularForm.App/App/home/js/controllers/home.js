@@ -1,5 +1,5 @@
 ﻿angular.module('AngularFormApp')
-    .controller('HomeController', function ($scope, formApiFactory) {
+    .controller('HomeController', function ($scope) {
 
         $scope.errorMessage = "";
         $scope.data = {};
