@@ -3,7 +3,7 @@
 ### To Do
 
 1. Create API layer and form models/interfaces  <span style="color:green;">__DONE__</span>
-2. Create angular routing config using states
+2. Create angular routing config using states <span style="color:green;">__DONE__</span>
 3. Create form & controller for each form-page (8)
 4. Create entry page w/ controller
 5. Create factory service for get/set form in LocalStorage
