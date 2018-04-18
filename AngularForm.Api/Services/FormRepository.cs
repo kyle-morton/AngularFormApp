@@ -56,8 +56,8 @@ namespace AngularForm.Api.Services
             {
                 var client = new MongoClient(ConnectionString);
                 var database = client.GetDatabase("Forms");
-                var collection = database.GetCollection<IResume>("Forms")
-                    .AsQueryable().Where(filter ?? (x => true));
+                var collection = database.GetCollection<ApplicationForm>("Forms")
+                    .AsQueryable().Where(filter ?? (x => true)).ToList();
                 forms = collection;
             }
             catch (Exception ex)
