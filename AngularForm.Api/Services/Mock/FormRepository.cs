@@ -1,71 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AngularForm.Api.Interfaces;
+﻿using AngularForm.Api.Interfaces;
 using AngularForm.Api.Interfaces.Form;
 using AngularForm.Api.Models;
-using AngularForm.Api.Utility;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Driver;
-using JsonConvert = Newtonsoft.Json.JsonConvert;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Web;
 
-namespace AngularForm.Api.Services
+namespace AngularForm.Api.Services.Mock
 {
     public class FormRepository : IFormRepository
     {
-
-        private readonly string ConnectionString = "mongodb://test_user:user1234@kmnosql-shard-00-00-ln6px.mongodb.net:27017,kmnosql-shard-00-01-ln6px.mongodb.net:27017,kmnosql-shard-00-02-ln6px.mongodb.net:27017/admin?replicaSet=KMNoSQL-shard-0&ssl=true";
 
         #region CRUD
 
         public void Create(IResume form)
         {
-            try
-            {
-                form.Id = Guid.NewGuid();
-                var client = new MongoClient(ConnectionString);
-                var database = client.GetDatabase("Forms");
-                var collection = database.GetCollection<IResume>("Forms");
-
-                collection.InsertOne(form);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex);
-                throw ex;
-            }
+            Forms.Add(form);
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Forms.Remove(GetForm(id));
         }
 
         public IResume GetForm(Guid id)
         {
-            //return GetForms(f => f.Id == id).SingleOrDefault();
-            throw new NotImplementedException();
+            return GetForms(f => f.Id == id).SingleOrDefault();
         }
 
         public IEnumerable<IResume> GetForms(Func<IResume, bool> filter = null)
         {
-            IEnumerable<IResume> forms = null;
-            try
-            {
-                var client = new MongoClient(ConnectionString);
-                var database = client.GetDatabase("Forms");
-                var collection = database.GetCollection<IResume>("Forms")
-                    .AsQueryable().Where(filter ?? (x => true));
-                forms = collection;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex);
-            }
-
-            return forms;
+            return filter != null
+                ? Forms.Where(filter)
+                : Forms;
         }
 
         public void Update(Guid id, IResume form)
@@ -81,7 +49,7 @@ namespace AngularForm.Api.Services
         {
             new ApplicationForm
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("a71b30a1-c5a8-4ff6-b809-a9d54dc268e1"),
                 CreateDate = DateTime.Now.AddDays(-5),
                 ModifyDate = DateTime.Now.AddDays(-1),
                 FirstName = "Kyle",
@@ -135,4 +103,6 @@ namespace AngularForm.Api.Services
 
         #endregion
     }
+
+    
 }

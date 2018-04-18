@@ -70,6 +70,8 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="packages.config" />
+    <Content Include="App\formList\html\formList.html" />
+    <Content Include="App\formList\js\controllers\formList.js" />
     <Content Include="App\form\html\personalInfo.min.html">
       <DependentUpon>personalInfo.html</DependentUpon>
     </Content>
