@@ -6,7 +6,7 @@
       "Constants/constants.js",
       "Services/navigation.js",
       "Services/storage.js",
-      "Services/form.js",
+      "Services/api.js",
       "App/statusSummary/js/statusSummary.js",
       "App/navButtons/js/navButtons.js",
       "App/navBar/js/controllers/navBar.js",

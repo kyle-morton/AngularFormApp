@@ -87,7 +87,7 @@
     <Content Include="bundle.min.js">
       <DependentUpon>bundle.js</DependentUpon>
     </Content>
-    <Content Include="Services\form.js" />
+    <Content Include="Services\api.js" />
     <Content Include="Services\navigation.js" />
     <Content Include="Services\storage.js" />
     <Content Include="assets\scripts\angular-route.js" />

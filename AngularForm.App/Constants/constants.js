@@ -1,7 +1,7 @@
 ﻿angular.module('AngularFormApp')
     .constant('appConstants', {
         API_URL: 'http://localhost:61109/api/form/',
-        STATE_KEY: 'appState',
+        STEP_KEY: 'formStep',
         FORM_KEY: 'formState',
         HOME: {
             KEY: 'home'

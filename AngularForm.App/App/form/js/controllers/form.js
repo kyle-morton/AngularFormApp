@@ -1,17 +1,18 @@
 ﻿angular.module('AngularFormApp')
-    .controller('FormController', function ($scope, appConstants, FormService, NavigationService) {
+    .controller('FormController', function ($scope, appConstants, StorageService, NavigationService, ApiService) {
 
         $scope.isFormValid = true;
         $scope.isStart = NavigationService.isStart();
-        $scope.form = FormService.getForm();
+
+        var formStr = StorageService.getItem(appConstants.FORM_KEY);
+        $scope.form = formStr ? JSON.parse(formStr) : {};
 
         //go to start if no form & not on starting step
         if (!$scope.isStart) {
             if (!$scope.form) 
                 NavigationService.goToStart();
         }
-        $scope.form = $scope.form ? $scope.form : {};
-
+        
         $scope.states = appConstants.STATES;
 
         $scope.back = function () {
@@ -21,14 +22,18 @@
         $scope.submit = function () {
 
             if ($scope.isFormValid) {
-                FormService.setForm($scope.form);
-                var nextState = NavigationService.getNextState();
+                //save form to local storage
+                StorageService.setItem(appConstants.FORM_KEY, JSON.stringify($scope.form));
 
-                if (nextState)
-                    NavigationService.go(nextState);
+                var nextStep = NavigationService.getNextState();
+
+                if (nextStep) {
+                    NavigationService.go(nextStep);
+                    StorageService.setItem(appConstants.STEP_KEY, nextStep);
+                }
                 else {
-                    FormService.submit($scope.form);
-                    console.log('submit form via API...');
+                    ApiService.submit($scope.form);
+                    StorageService.clearItem(appConstants.STEP_KEY);
                 }
             }
         }
