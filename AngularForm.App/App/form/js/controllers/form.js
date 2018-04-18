@@ -1,8 +1,7 @@
 ﻿angular.module('AngularFormApp')
-    .controller('FormController', function ($scope, FormService, NavigationService) {
+    .controller('FormController', function ($scope, appConstants, FormService, NavigationService) {
 
         $scope.isFormValid = true;
-
         $scope.isStart = NavigationService.isStart();
         $scope.form = FormService.getForm();
 
@@ -12,6 +11,8 @@
                 NavigationService.goToStart();
         }
         $scope.form = $scope.form ? $scope.form : {};
+
+        $scope.states = appConstants.STATES;
 
         $scope.back = function () {
             var prevState = NavigationService.getPreviousState();
