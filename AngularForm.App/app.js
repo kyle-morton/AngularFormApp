@@ -50,7 +50,7 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
             .state(appConstants.FORM[1].KEY, {
                 url: '/form',
                 bannerTitle: appConstants.FORM[1].TITLE,
-                views: angular.extend({}, reusableViewBase, {
+                views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/address.html',
                         controller: 'FormController'
@@ -60,7 +60,7 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
             .state(appConstants.FORM[2].KEY, {
                 url: '/form',
                 bannerTitle: appConstants.FORM[2].TITLE,
-                views: angular.extend({}, reusableViewBase, {
+                views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/education.html',
                         controller: 'FormController'

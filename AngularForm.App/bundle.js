@@ -50,7 +50,7 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
             .state(appConstants.FORM[1].KEY, {
                 url: '/form',
                 bannerTitle: appConstants.FORM[1].TITLE,
-                views: angular.extend({}, reusableViewBase, {
+                views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/address.html',
                         controller: 'FormController'
@@ -60,7 +60,7 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
             .state(appConstants.FORM[2].KEY, {
                 url: '/form',
                 bannerTitle: appConstants.FORM[2].TITLE,
-                views: angular.extend({}, reusableViewBase, {
+                views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/education.html',
                         controller: 'FormController'
@@ -410,6 +410,18 @@ angular.module('AngularFormApp')
 
         console.log('statusSummary init...');
 
+        var formSteps = appConstants.FORM;
+        var statusString = '';
+        for (var i = 0; i < formSteps.length; i++) {
+            statusString = statusString.concat(formSteps[i].TITLE);
+            if (formSteps[i].KEY === $state.current.name)
+                break;
+            else
+                statusString = statusString.concat(' -> ');
+        }
+
+        $scope.statusString = statusString;
+
     });
 angular.module('AngularFormApp')
     .controller('NavButtonsController', function ($scope, $state, appConstants) {
@@ -468,6 +480,7 @@ angular.module('AngularFormApp')
         $scope.submit = function () {
 
             if ($scope.isFormValid) {
+
                 //save form to local storage
                 StorageService.setItem(appConstants.FORM_KEY, JSON.stringify($scope.form));
 
@@ -477,10 +490,10 @@ angular.module('AngularFormApp')
                     NavigationService.go(nextStep);
                     StorageService.setItem(appConstants.STEP_KEY, nextStep);
                 }
-                else {
-                    ApiService.submit($scope.form);
-                    StorageService.clearItem(appConstants.STEP_KEY);
-                }
+                //else {
+                //    ApiService.submit($scope.form);
+                //    StorageService.clearItem(appConstants.STEP_KEY);
+                //}
             }
         }
 

@@ -22,6 +22,7 @@
         $scope.submit = function () {
 
             if ($scope.isFormValid) {
+
                 //save form to local storage
                 StorageService.setItem(appConstants.FORM_KEY, JSON.stringify($scope.form));
 
@@ -31,10 +32,10 @@
                     NavigationService.go(nextStep);
                     StorageService.setItem(appConstants.STEP_KEY, nextStep);
                 }
-                else {
-                    ApiService.submit($scope.form);
-                    StorageService.clearItem(appConstants.STEP_KEY);
-                }
+                //else {
+                //    ApiService.submit($scope.form);
+                //    StorageService.clearItem(appConstants.STEP_KEY);
+                //}
             }
         }
 
