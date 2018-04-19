@@ -734,7 +734,7 @@ angular.module('AngularFormApp')
 
                 if (response) {
                     debugger;
-                    $scope.forms = response.data;
+                    $scope.forms = response;
                 } else {
                     //handle error
                 }
