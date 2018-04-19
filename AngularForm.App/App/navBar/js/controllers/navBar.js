@@ -2,12 +2,16 @@
     .controller('NavBarController', function ($scope, $state, appConstants) {
 
         var currentState = $state.current.name;
-        console.log('key/state: ' + appConstants.HOME.KEY + '/' + currentState);
         $scope.isHome = appConstants.HOME.KEY === currentState;
-        //$scope.isHome = currentState
+        $scope.isForms = appConstants.FORM_LIST.KEY === currentState;
+        $scope.isForm = appConstants.FORM.KEY === currentState;
 
         $scope.goToHome = function () {
             $state.go(appConstants.HOME.KEY, {});
+        };
+
+        $scope.goToForms = function () {
+            $state.go(appConstants.FORM_LIST.KEY, {});
         };
 
         $scope.goToFormStart = function () {

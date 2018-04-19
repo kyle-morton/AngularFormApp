@@ -76,6 +76,7 @@
       <DependentUpon>personalInfo.html</DependentUpon>
     </Content>
     <Content Include="App\form\js\controllers\form.js" />
+    <Content Include="App\form\js\services\form.js" />
     <Content Include="App\navBar\html\navBar.html" />
     <Content Include="App\navBar\js\controllers\navBar.js" />
     <Content Include="App\navButtons\html\navButtons.html" />
@@ -89,6 +90,8 @@
     <Content Include="bundle.min.js">
       <DependentUpon>bundle.js</DependentUpon>
     </Content>
+    <Content Include="assets\scripts\angular-resource.js" />
+    <Content Include="assets\scripts\angular-resource.min.js" />
     <Content Include="Services\api.js" />
     <Content Include="Services\navigation.js" />
     <Content Include="Services\storage.js" />
@@ -98,6 +101,7 @@
     <Content Include="assets\scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="assets\scripts\jquery-3.3.1.min.map" />
     <Content Include="assets\scripts\angular-route.min.js.map" />
+    <Content Include="assets\scripts\angular-resource.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -154,7 +158,6 @@
     <Content Include="App\form\html\references.html" />
     <Content Include="App\form\html\review.html" />
     <Content Include="App\form\html\success.html" />
-    <Content Include="App\form\html\viewAll.html" />
     <Content Include="App\home\html\home.html" />
     <Content Include="Web.config" />
     <Content Include="assets\scripts\umd\popper.min.js.map" />
@@ -179,7 +182,6 @@
   <ItemGroup>
     <Folder Include="App\form\js\directives\" />
     <Folder Include="App\form\js\filters\" />
-    <Folder Include="App\form\js\services\" />
     <Folder Include="assets\content\font-awesome\" />
     <Folder Include="assets\content\images\" />
     <Folder Include="Widgets\reusableComponent1\" />

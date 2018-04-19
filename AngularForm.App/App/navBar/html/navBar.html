@@ -6,10 +6,13 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" ng-class="{active: isHome === true}">
-                <a class="nav-link pointer" ng-click="goToHome();">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link pointer" ng-click="goToHome();">Home <span ng-if="isHome === true" class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item" ng-class="{active: isHome === false}">
-                <a class="nav-link pointer" ng-click="goToFormStart();">New Form</a>
+            <li class="nav-item" ng-class="{active: isForms === true}">
+                <a class="nav-link pointer" ng-click="goToForms();">Forms <span ng-if="isForms === true" class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" ng-class="{active: isForm === true}">
+                <a class="nav-link pointer" ng-click="goToFormStart();">New Form <span ng-if="isForm === true" class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>

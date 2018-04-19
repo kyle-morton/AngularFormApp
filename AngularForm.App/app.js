@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
+angular.module('AngularFormApp', ['ui.router', 'ngResource']) 
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants) {
 
         $urlRouterProvider.otherwise('/home');
@@ -25,7 +25,7 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
         });
 
         $stateProvider
-            .state('home',
+            .state(appConstants.HOME.KEY,
                 {
                     url: '/home',
                     views: angular.extend({},
@@ -36,7 +36,19 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
                                 controller: 'HomeController'
                             }
                         })
-                })
+            })
+            .state(appConstants.FORM_LIST.KEY,
+                {
+                    url: '/forms',
+                    views: angular.extend({},
+                        reusableViewBase,
+                        {
+                            contentView: {
+                                templateUrl: 'App/formList/html/formList.html',
+                                controller: 'FormListController'
+                            }
+                        })
+            })
             .state(appConstants.FORM[0].KEY, {
                 url: '/form',
                 bannerTitle: appConstants.FORM[0].TITLE,
@@ -67,6 +79,46 @@ angular.module('AngularFormApp', ['ui.router']) //,'services','controllers'])
                     }
                 })
             })
+            .state(appConstants.FORM[3].KEY, {
+                url: '/form',
+                bannerTitle: appConstants.FORM[3].TITLE,
+                views: angular.extend({}, reusableFormBase, {
+                    contentView: {
+                        templateUrl: 'App/form/html/employment.html',
+                        controller: 'FormController'
+                    }
+                })
+            })
+            .state(appConstants.FORM[4].KEY, {
+                url: '/form',
+                bannerTitle: appConstants.FORM[4].TITLE,
+                views: angular.extend({}, reusableFormBase, {
+                    contentView: {
+                        templateUrl: 'App/form/html/certification.html',
+                        controller: 'FormController'
+                    }
+                })
+            })
+            .state(appConstants.FORM[5].KEY, {
+                url: '/form',
+                bannerTitle: appConstants.FORM[5].TITLE,
+                views: angular.extend({}, reusableFormBase, {
+                    contentView: {
+                        templateUrl: 'App/form/html/references.html',
+                        controller: 'FormController'
+                    }
+                })
+            })
+            .state(appConstants.FORM[6].KEY, {
+                url: '/form',
+                bannerTitle: appConstants.FORM[6].TITLE,
+                views: angular.extend({}, reusableFormBase, {
+                    contentView: {
+                        templateUrl: 'App/form/html/hobbies.html',
+                        controller: 'FormController'
+                    }
+                })
+            });
             
 
         $locationProvider.hashPrefix('');

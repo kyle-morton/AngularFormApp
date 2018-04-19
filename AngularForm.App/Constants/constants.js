@@ -1,10 +1,14 @@
 ﻿angular.module('AngularFormApp')
     .constant('appConstants', {
-        API_URL: 'http://localhost:61109/api/form/',
+        API_BASE: 'http://localhost:61109/api',
+        LOGIN_URI: '/authenticateUser',
         STEP_KEY: 'formStep',
         FORM_KEY: 'formState',
         HOME: {
             KEY: 'home'
+        },
+        FORM_LIST: {
+            KEY: 'formList'
         },
         FORM: [
             {
@@ -14,11 +18,31 @@
             }, 
             {
                 KEY: 'address',
-                TITLE: 'Address',
+                TITLE: 'Address'
             },
             {
                 KEY: 'education',
-                TITLE: 'Education',
+                TITLE: 'Education'
+            },
+            {
+                KEY: 'employment',
+                TITLE: 'Employment'
+            },
+            {
+                KEY: 'ceritification',
+                TITLE: 'Ceritification'
+            },
+            {
+                KEY: 'reference',
+                TITLE: 'References'
+            },
+            {
+                KEY: 'hobbies',
+                TITLE: 'Hobbies'
+            },
+            {
+                KEY: 'review',
+                TITLE: 'Review',
                 IS_END: true
             }
         ],
