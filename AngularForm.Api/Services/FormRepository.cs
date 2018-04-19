@@ -25,10 +25,7 @@ namespace AngularForm.Api.Services
                     Properties.Settings.Default.CollectionName
                 );
 
-                //form.Id = GetNewId(collection);
-
-                BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
-                form.Id = Guid.NewGuid();
+                form.Id = GetNewId(collection);
                 collection.InsertOne(form);
             }
             catch (Exception ex)
@@ -53,21 +50,18 @@ namespace AngularForm.Api.Services
 
         public IResume GetForm(Guid id)
         {
-            return GetForms(f => f.Id == id).SingleOrDefault();
+            return GetForms().ToList().SingleOrDefault(f => f.Id == id);
         }
 
-        public IEnumerable<IResume> GetForms(Expression<Func<IResume, bool>> filter = null)
+        public IEnumerable<IResume> GetForms()
         {
             IEnumerable<IResume> forms = null;
             try
             {
-                var collection = GetCollection<IResume>(
+                forms = GetCollection<ApplicationForm>(
                         Properties.Settings.Default.DatabaseName,
                         Properties.Settings.Default.CollectionName
-                    )
-                    .Find(filter ?? (x => true))
-                    .ToEnumerable();
-                forms = collection;
+                    ).AsQueryable();
             } catch (Exception ex) {
                 Console.WriteLine("Exception: " + ex);
             }
@@ -95,9 +89,8 @@ namespace AngularForm.Api.Services
             do
             {
                 newId = Guid.NewGuid();
-                var filter = Builders<IResume>.Filter.Eq("id", ObjectId.Parse(newId.ToString()));
-                var entity = collection.Find(filter).FirstOrDefault();
-                exists = entity != null;
+                var form = GetForm(newId);
+                exists = form != null;
             } while (exists);
 
             return newId;

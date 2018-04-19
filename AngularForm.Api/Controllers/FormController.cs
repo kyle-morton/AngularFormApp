@@ -24,9 +24,9 @@ namespace AngularForm.Api.Controllers
             return new FormRepository().GetForms().ToList();
         }
 
-        public IResume Get(string guid)
+        public IResume Get(string id)
         {
-            return new FormRepository().GetForm(Guid.Parse(guid));
+            return new FormRepository().GetForm(Guid.Parse(id));
         }
 
         [HttpPost]

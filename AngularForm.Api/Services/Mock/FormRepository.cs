@@ -29,7 +29,7 @@ namespace AngularForm.Api.Services.Mock
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IResume> GetForms(Expression<Func<IResume, bool>> filter = null)
+        public IEnumerable<IResume> GetForms()
         {
             throw new NotImplementedException();
         }
