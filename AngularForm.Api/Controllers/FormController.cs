@@ -1,10 +1,11 @@
 ﻿using AngularForm.Api.Interfaces.Form;
 using AngularForm.Api.Models;
-using AngularForm.Api.Services.Mock;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using AngularForm.Api.Services;
 
 namespace AngularForm.Api.Controllers
 {
@@ -14,13 +15,13 @@ namespace AngularForm.Api.Controllers
     {
 
         /// <summary>
-        /// get a form (testing only) - 
+        /// get all form - 
         /// http://localhost:61109/api/form/GetAll
         /// </summary>
         /// <returns></returns>
         public IEnumerable<IResume> GetAll()
         {
-            return new AngularForm.Api.Services.FormRepository().GetForms();
+            return new FormRepository().GetForms().ToList();
         }
 
         public IResume Get(string guid)
@@ -28,6 +29,7 @@ namespace AngularForm.Api.Controllers
             return new FormRepository().GetForm(Guid.Parse(guid));
         }
 
+        [HttpPost]
         public void Submit([FromBody]ApplicationForm form)
         {
             new FormRepository().Create(form);
@@ -43,13 +45,6 @@ namespace AngularForm.Api.Controllers
         public void Delete(int id)
         {
 
-        }
-
-        [HttpPost]
-        public string Test([FromBody]ApplicationForm form)
-        {
-            new AngularForm.Api.Services.FormRepository().Create(form);
-            return "OK";
         }
 
     }

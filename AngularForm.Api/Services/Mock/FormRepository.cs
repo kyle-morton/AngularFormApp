@@ -16,24 +16,22 @@ namespace AngularForm.Api.Services.Mock
 
         public void Create(IResume form)
         {
-            Forms.Add(form);
+            throw new NotImplementedException();
         }
 
         public void Delete(Guid id)
         {
-            Forms.Remove(GetForm(id));
+            throw new NotImplementedException();
         }
 
         public IResume GetForm(Guid id)
         {
-            return GetForms(f => f.Id == id).SingleOrDefault();
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<IResume> GetForms(Func<IResume, bool> filter = null)
+        public IEnumerable<IResume> GetForms(Expression<Func<IResume, bool>> filter = null)
         {
-            return filter != null
-                ? Forms.Where(filter)
-                : Forms;
+            throw new NotImplementedException();
         }
 
         public void Update(Guid id, IResume form)

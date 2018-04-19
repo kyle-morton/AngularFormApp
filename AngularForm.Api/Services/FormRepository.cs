@@ -1,34 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AngularForm.Api.Interfaces;
+﻿using AngularForm.Api.Interfaces;
 using AngularForm.Api.Interfaces.Form;
 using AngularForm.Api.Models;
-using AngularForm.Api.Utility;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
 using MongoDB.Driver;
-using JsonConvert = Newtonsoft.Json.JsonConvert;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Linq.Expressions;
+using MongoDB.Bson;
 
 namespace AngularForm.Api.Services
 {
-    public class FormRepository : IFormRepository
+    public class FormRepository : MongoRepositoryBase, IFormRepository
     {
-
-        private readonly string ConnectionString = "mongodb://test_user:user1234@kmnosql-shard-00-00-ln6px.mongodb.net:27017,kmnosql-shard-00-01-ln6px.mongodb.net:27017,kmnosql-shard-00-02-ln6px.mongodb.net:27017/admin?replicaSet=KMNoSQL-shard-0&ssl=true";
-
-        #region CRUD
+        
+        #region CREATE
 
         public void Create(IResume form)
         {
             try
             {
-                form.Id = Guid.NewGuid();
-                var client = new MongoClient(ConnectionString);
-                var database = client.GetDatabase("Forms");
-                var collection = database.GetCollection<IResume>("Forms");
+                var collection = GetCollection<IResume>(
+                    Properties.Settings.Default.DatabaseName, 
+                    Properties.Settings.Default.CollectionName
+                );
 
+                //form.Id = GetNewId(collection);
+
+                BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
+                form.Id = Guid.NewGuid();
                 collection.InsertOne(form);
             }
             catch (Exception ex)
@@ -38,35 +38,46 @@ namespace AngularForm.Api.Services
             }
         }
 
+        #endregion
+
+        #region DELETE
+
         public void Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region GET
+
         public IResume GetForm(Guid id)
         {
-            //return GetForms(f => f.Id == id).SingleOrDefault();
-            throw new NotImplementedException();
+            return GetForms(f => f.Id == id).SingleOrDefault();
         }
 
-        public IEnumerable<IResume> GetForms(Func<IResume, bool> filter = null)
+        public IEnumerable<IResume> GetForms(Expression<Func<IResume, bool>> filter = null)
         {
             IEnumerable<IResume> forms = null;
             try
             {
-                var client = new MongoClient(ConnectionString);
-                var database = client.GetDatabase("Forms");
-                var collection = database.GetCollection<ApplicationForm>("Forms")
-                    .AsQueryable().Where(filter ?? (x => true)).ToList();
+                var collection = GetCollection<IResume>(
+                        Properties.Settings.Default.DatabaseName,
+                        Properties.Settings.Default.CollectionName
+                    )
+                    .Find(filter ?? (x => true))
+                    .ToEnumerable();
                 forms = collection;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Console.WriteLine("Exception: " + ex);
             }
 
             return forms;
         }
+
+        #endregion
+
+        #region UPDATE
 
         public void Update(Guid id, IResume form)
         {
@@ -75,64 +86,24 @@ namespace AngularForm.Api.Services
 
         #endregion
 
-        #region FORMS
+        #region GET ID
 
-        private static List<IResume> Forms = new List<IResume>
+        private Guid GetNewId(IMongoCollection<IResume> collection)
         {
-            new ApplicationForm
+            Guid newId;
+            bool exists;
+            do
             {
-                Id = Guid.NewGuid(),
-                CreateDate = DateTime.Now.AddDays(-5),
-                ModifyDate = DateTime.Now.AddDays(-1),
-                FirstName = "Kyle",
-                LastName = "Morton",
-                DateOfBirth = "07/22/1991",
-                Address = new Address
-                {
-                    Street = "123 Main Street",
-                    City = "Little Rock",
-                    State = "AR",
-                    Zip = "72211"
-                },
-                HighSchool = "Paragould High School",
-                College = "Arkansas State University",
-                Degree = "Computer Science",
-                CurrentEmployer = new Employer
-                {
-                    Name = "DFJ",
-                    StartDate = DateTime.Parse("6/5/2017")
-                },
-                FormerEmployer = new Employer
-                {
-                    Name = "WEHCO Media, Inc.",
-                    StartDate = DateTime.Parse("8/25/2015"),
-                    EndDate = DateTime.Parse("6/2/2017")
-                },
-                Certifications = "C#, Html",
-                References = new List<Reference>
-                {
-                    new Reference
-                    {
-                        Name = "Aaron Dixon",
-                        Relationship = "Co-Worker",
-                        PhoneNumber = "555-555-5555"
-                    },
-                    new Reference
-                    {
-                        Name = "Hank Chadwick",
-                        Relationship = "Co-Worker",
-                        PhoneNumber = "555-555-5555"
-                    },
-                    new Reference
-                    {
-                        Name = "Ashley Lawrence",
-                        Relationship = "Co-Worker",
-                        PhoneNumber = "555-555-5555"
-                    }
-                }
-            }
-    };
+                newId = Guid.NewGuid();
+                var filter = Builders<IResume>.Filter.Eq("id", ObjectId.Parse(newId.ToString()));
+                var entity = collection.Find(filter).FirstOrDefault();
+                exists = entity != null;
+            } while (exists);
+
+            return newId;
+        }
 
         #endregion
+
     }
 }

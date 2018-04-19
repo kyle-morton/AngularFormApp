@@ -11,7 +11,7 @@ namespace AngularForm.Api.Interfaces
     public interface IFormRepository
     {
         IResume GetForm(Guid id);
-        IEnumerable<IResume> GetForms(Func<IResume, bool> filter = null);
+        IEnumerable<IResume> GetForms(Expression<Func<IResume, bool>> filter = null);
         void Create(IResume form);
         void Update(Guid id, IResume form);
         void Delete(Guid id);
