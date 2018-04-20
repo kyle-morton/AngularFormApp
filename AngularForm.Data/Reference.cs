@@ -15,11 +15,11 @@ namespace AngularForm.Data
     public partial class Reference
     {
         public int Id { get; set; }
-        public int EmploymentId { get; set; }
+        public System.Guid FormId { get; set; }
         public string Name { get; set; }
         public string Relationship { get; set; }
         public string PhoneNumber { get; set; }
     
-        public virtual Employment Employment { get; set; }
+        public virtual Form Form { get; set; }
     }
 }

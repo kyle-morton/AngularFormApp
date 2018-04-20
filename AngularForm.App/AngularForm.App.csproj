@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <Content Include="App\form\html\hobbies.html" />
     <Content Include="assets\styles\font-awesome.min.css" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\fonts\FontAwesome.otf" />
@@ -159,8 +160,6 @@
     <Content Include="App\form\html\certifications.html" />
     <Content Include="App\form\html\education.html" />
     <Content Include="App\form\html\employment.html" />
-    <Content Include="App\form\html\hobbies.html" />
-    <Content Include="App\form\html\container.html" />
     <Content Include="App\form\html\personalInfo.html" />
     <Content Include="App\form\html\references.html" />
     <Content Include="App\form\html\review.html" />

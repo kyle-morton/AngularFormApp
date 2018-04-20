@@ -17,7 +17,9 @@ namespace AngularForm.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Form()
         {
-            this.Employments = new HashSet<Employment>();
+            this.Certifications = new HashSet<Certification>();
+            this.Hobbies = new HashSet<Hobbie>();
+            this.References = new HashSet<Reference>();
         }
     
         public System.Guid Id { get; set; }
@@ -25,9 +27,14 @@ namespace AngularForm.Data
         public System.DateTime ModifyDate { get; set; }
     
         public virtual Address Address { get; set; }
-        public virtual Education Education { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employment> Employments { get; set; }
+        public virtual ICollection<Certification> Certifications { get; set; }
+        public virtual Education Education { get; set; }
+        public virtual Employer Employer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Hobbie> Hobbies { get; set; }
         public virtual Person Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Reference> References { get; set; }
     }
 }

@@ -26,10 +26,11 @@ namespace AngularForm.Data
         }
     
         public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Certification> Certifications { get; set; }
         public virtual DbSet<Education> Educations { get; set; }
         public virtual DbSet<Employer> Employers { get; set; }
-        public virtual DbSet<Employment> Employments { get; set; }
         public virtual DbSet<Form> Forms { get; set; }
+        public virtual DbSet<Hobbie> Hobbies { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Reference> References { get; set; }
     }

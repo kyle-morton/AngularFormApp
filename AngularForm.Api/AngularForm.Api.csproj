@@ -193,7 +193,6 @@
     <Compile Include="Models\Form\Address.cs" />
     <Compile Include="Models\Form\Education.cs" />
     <Compile Include="Models\Form\Employer.cs" />
-    <Compile Include="Models\Form\Employment.cs" />
     <Compile Include="Models\Form\Person.cs" />
     <Compile Include="Models\Form\Reference.cs" />
     <Compile Include="Models\Form\ApplicationForm.cs" />
