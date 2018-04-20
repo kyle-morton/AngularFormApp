@@ -69,6 +69,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <Content Include="assets\styles\font-awesome.min.css" />
+    <Content Include="assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\fonts\FontAwesome.otf" />
+    <Content Include="assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\fonts\fontawesome-webfont.eot" />
     <None Include="packages.config" />
     <Content Include="App\formList\html\formList.html" />
     <Content Include="App\formList\js\controllers\formList.js" />

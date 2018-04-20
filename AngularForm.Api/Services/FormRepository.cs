@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 
 namespace AngularForm.Api.Services
 {
-    public class FormRepository : MongoRepositoryBase, IFormRepository
+    public class FormRepository : MongoRepositoryBase //, IFormRepository
     {
 
         //TODO: optimize queries to use mongoDB driver (instead of getting entire collection into memory and then searching)
@@ -41,15 +42,6 @@ namespace AngularForm.Api.Services
 
         #endregion
 
-        #region DELETE
-
-        public void Delete(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         #region GET
 
         public IResume GetForm(Guid id)
@@ -63,17 +55,48 @@ namespace AngularForm.Api.Services
             try
             {
                 forms = GetCollection<ApplicationForm>(
-                        Properties.Settings.Default.DatabaseName,
-                        Properties.Settings.Default.CollectionName
-                    ).AsQueryable();
-            } catch (Exception ex) {
+                    Properties.Settings.Default.DatabaseName,
+                    Properties.Settings.Default.CollectionName
+                ).AsQueryable();
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine("Exception: " + ex);
             }
 
             return forms;
         }
 
+        public async Task GetAllForms()
+        {
+            IMongoCollection<BsonDocument> collection = 
+        }
+
         #endregion
+
+        #region DELETE
+
+        public void Delete(Guid id)
+        {
+            try
+            {
+                var collection = GetCollection<IResume>(
+                    Properties.Settings.Default.DatabaseName,
+                    Properties.Settings.Default.CollectionName
+                );
+
+                //collection.DeleteOne(Builders<BsonDocument>.Filter.eq);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex);
+                throw ex;
+            }
+        }
+
+        #endregion
+
+
 
         #region UPDATE
 

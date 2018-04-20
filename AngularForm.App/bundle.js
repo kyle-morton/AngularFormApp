@@ -744,6 +744,12 @@ angular.module('AngularFormApp')
                 $scope.isLoading = false;
             });
         };
+        $scope.edit = function(form) {
+            console.log('editing: ' + form.Id);
+        }
+        $scope.delete = function(form) {
+            console.log('deleting: ' + form.Id);
+        }
 
         $scope.getForms();
     });

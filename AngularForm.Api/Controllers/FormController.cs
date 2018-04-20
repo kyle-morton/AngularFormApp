@@ -53,9 +53,20 @@ namespace AngularForm.Api.Controllers
         }
 
         [HttpDelete]
-        public void Delete(int id)
+        public ResponseMessage Delete(string id)
         {
-
+            try
+            {
+                new FormRepository().Delete(Guid.Parse(id));
+                return new ResponseMessage {IsSuccess = true};
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    ErrorMessage = "Error occurred while deleting this form"
+                };
+            }
         }
 
     }
