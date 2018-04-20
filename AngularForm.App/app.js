@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('AngularFormApp', ['ui.router', 'ngResource']) 
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants) {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants, formConstants) {
 
         $urlRouterProvider.otherwise('/home');
 
@@ -37,7 +37,7 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                             }
                         })
             })
-            .state(appConstants.FORM_LIST.KEY,
+            .state(formConstants.FORM_LIST.KEY,
                 {
                     url: '/forms',
                     views: angular.extend({},
@@ -49,9 +49,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                             }
                         })
             })
-            .state(appConstants.FORM[0].KEY, {
+            .state(formConstants.FORM[0].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[0].TITLE,
+                bannerTitle: formConstants.FORM[0].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/personalInfo.html',
@@ -59,9 +59,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[1].KEY, {
+            .state(formConstants.FORM[1].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[1].TITLE,
+                bannerTitle: formConstants.FORM[1].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/address.html',
@@ -69,9 +69,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[2].KEY, {
+            .state(formConstants.FORM[2].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[2].TITLE,
+                bannerTitle: formConstants.FORM[2].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/education.html',
@@ -79,9 +79,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[3].KEY, {
+            .state(formConstants.FORM[3].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[3].TITLE,
+                bannerTitle: formConstants.FORM[3].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/employment.html',
@@ -89,9 +89,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[4].KEY, {
+            .state(formConstants.FORM[4].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[4].TITLE,
+                bannerTitle: formConstants.FORM[4].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/certification.html',
@@ -99,9 +99,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[5].KEY, {
+            .state(formConstants.FORM[5].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[5].TITLE,
+                bannerTitle: formConstants.FORM[5].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/references.html',
@@ -109,9 +109,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[6].KEY, {
+            .state(formConstants.FORM[6].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[6].TITLE,
+                bannerTitle: formConstants.FORM[6].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/hobbies.html',

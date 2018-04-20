@@ -1,41 +1,59 @@
 ﻿angular.module('AngularFormApp')
-    .controller('FormController', function ($scope, appConstants, StorageService, NavigationService, ApiService) {
+    .controller('FormController',
+    function ($scope, $state, formConstants, StorageService, AlertService, formNavigationService, formService) {
 
         $scope.isFormValid = true;
-        $scope.isStart = NavigationService.isStart();
+        $scope.isProcessing = false;
+        $scope.isStart = formNavigationService.isStart();
 
-        var formStr = StorageService.getItem(appConstants.FORM_KEY);
+        var formStr = StorageService.getItem(formConstants.FORM_KEY);
         $scope.form = formStr ? JSON.parse(formStr) : {};
 
         //go to start if no form & not on starting step
         if (!$scope.isStart) {
             if (!$scope.form) 
-                NavigationService.goToStart();
+                formNavigationService.goToStart();
         }
         
-        $scope.states = appConstants.STATES;
+        $scope.states = formConstants.STATES;
 
         $scope.back = function () {
-            var prevState = NavigationService.getPreviousState();
-            NavigationService.go(prevState);
+            var prevState = formNavigationService.getPreviousStep();
+            $state.go(prevState, {});
         }
         $scope.submit = function () {
 
             if ($scope.isFormValid) {
 
-                //save form to local storage
-                StorageService.setItem(appConstants.FORM_KEY, JSON.stringify($scope.form));
+                $scope.isProcessing = true;
 
-                var nextStep = NavigationService.getNextState();
+                //save form to local storage
+                StorageService.setItem(formConstants.FORM_KEY, JSON.stringify($scope.form));
+
+                var nextStep = formNavigationService.getNextStep();
 
                 if (nextStep) {
-                    NavigationService.go(nextStep);
-                    StorageService.setItem(appConstants.STEP_KEY, nextStep);
+                    $state.go(nextStep, {});
+                    StorageService.setItem(formConstants.STEP_KEY, nextStep);
                 }
-                //else {
-                //    ApiService.submit($scope.form);
-                //    StorageService.clearItem(appConstants.STEP_KEY);
-                //}
+                else {
+                    formService.submit($scope.form, function (response) {
+                        if (response && response.IsSuccess) {
+                            AlertService.success("Form saved!", "Thanks for your submission!")
+                                .then(function () {
+                                    $state.go(formConstants.FORM_LIST.KEY, {});
+                                    StorageService.clearItem(formConstants.FORM_KEY);
+                                    StorageService.clearItem(formConstants.STEP_KEY);
+                                });
+                        } else {
+                            AlertService.error("Error!", "An error has occurred!")
+                                .then(function () {
+                                    $state.go(formConstants.FORM_LIST.KEY, {});
+                                });
+                        }
+                    });
+                    
+                }
             }
         }
 

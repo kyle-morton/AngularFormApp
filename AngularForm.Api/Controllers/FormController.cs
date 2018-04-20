@@ -30,9 +30,20 @@ namespace AngularForm.Api.Controllers
         }
 
         [HttpPost]
-        public void Submit([FromBody]ApplicationForm form)
+        public ResponseMessage Submit([FromBody]ApplicationForm form)
         {
-            new FormRepository().Create(form);
+            try
+            {
+                new FormRepository().Create(form);
+                return new ResponseMessage { IsSuccess = true };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    ErrorMessage = "Error occurred while submiting form"
+                };
+            }
         }
 
         [HttpPut]

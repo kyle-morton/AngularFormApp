@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('AngularFormApp', ['ui.router', 'ngResource']) 
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants) {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants, formConstants) {
 
         $urlRouterProvider.otherwise('/home');
 
@@ -37,7 +37,7 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                             }
                         })
             })
-            .state(appConstants.FORM_LIST.KEY,
+            .state(formConstants.FORM_LIST.KEY,
                 {
                     url: '/forms',
                     views: angular.extend({},
@@ -49,9 +49,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                             }
                         })
             })
-            .state(appConstants.FORM[0].KEY, {
+            .state(formConstants.FORM[0].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[0].TITLE,
+                bannerTitle: formConstants.FORM[0].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/personalInfo.html',
@@ -59,9 +59,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[1].KEY, {
+            .state(formConstants.FORM[1].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[1].TITLE,
+                bannerTitle: formConstants.FORM[1].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/address.html',
@@ -69,9 +69,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[2].KEY, {
+            .state(formConstants.FORM[2].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[2].TITLE,
+                bannerTitle: formConstants.FORM[2].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/education.html',
@@ -79,9 +79,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[3].KEY, {
+            .state(formConstants.FORM[3].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[3].TITLE,
+                bannerTitle: formConstants.FORM[3].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/employment.html',
@@ -89,9 +89,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[4].KEY, {
+            .state(formConstants.FORM[4].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[4].TITLE,
+                bannerTitle: formConstants.FORM[4].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/certification.html',
@@ -99,9 +99,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[5].KEY, {
+            .state(formConstants.FORM[5].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[5].TITLE,
+                bannerTitle: formConstants.FORM[5].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/references.html',
@@ -109,9 +109,9 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                     }
                 })
             })
-            .state(appConstants.FORM[6].KEY, {
+            .state(formConstants.FORM[6].KEY, {
                 url: '/form',
-                bannerTitle: appConstants.FORM[6].TITLE,
+                bannerTitle: formConstants.FORM[6].TITLE,
                 views: angular.extend({}, reusableFormBase, {
                     contentView: {
                         templateUrl: 'App/form/html/hobbies.html',
@@ -129,11 +129,205 @@ angular.module('AngularFormApp')
     .constant('appConstants', {
         API_BASE: 'http://localhost:61109/api',
         LOGIN_URI: '/authenticateUser',
-        STEP_KEY: 'formStep',
-        FORM_KEY: 'formState',
         HOME: {
             KEY: 'home'
-        },
+        }
+    });
+
+angular.module('AngularFormApp')
+    .service('StorageService', function ($window) {
+
+        this.getItem = function(key) {
+            return $window.localStorage.getItem(key);
+        }
+        this.setItem = function(key, value) {
+            $window.localStorage.setItem(key, value);
+        }
+        this.clearItem = function(key) {
+            $window.localStorage.removeItem(key, null);
+        }
+
+    });
+angular.module('AngularFormApp')
+    .service('ApiService',
+        function($http, $log, $q, $resource, appConstants) {
+
+            var domainApiUrl = appConstants.API_BASE;
+
+            function getResourcePromise(uri, payload, parameters, resourceConfig, resourceMethod, additionalHeaders) {
+                // calcualte URL
+                var url = domainApiUrl + uri;
+
+                // calculate HEADERS
+                var headers = angular
+                    .extend({},
+                        {
+                            'Accept': 'application/json,text/html',
+                        },
+                        additionalHeaders || {});
+
+                // calculate method
+                var method = methodMap[resourceMethod] || methodMap[resourceMethod].get;
+                var isGet = method.verb === 'GET';
+                var isAuthenticating = uri === appConstants.LOGIN_URI;
+
+                // initialize resource method configuration
+                if (resourceConfig) {
+                    resourceConfig[resourceMethod] = {
+                        headers: headers,
+                        method: method.verb
+                    };
+
+                    if (isGet)
+                        resourceConfig[resourceMethod].isArray = false;
+
+                    if (isAuthenticating)
+                        resourceConfig[resourceMethod].isArray = true;
+
+                }
+
+                return method.fn($resource(url, parameters || null, resourceConfig), payload).$promise;
+            }
+
+            var methodMap = {
+                delete: {
+                    verb: 'DELETE',
+                    fn: function(resource) { return resource.delete(); }
+                },
+                get: {
+                    verb: 'GET',
+                    fn: function(resource) { return resource.get(); }
+                },
+                query: {
+                    verb: 'GET',
+                    fn: function(resource) { return resource.query(); }
+                },
+                save: {
+                    verb: 'POST',
+                    fn: function(resource, payload) { return resource.save(payload); }
+                },
+                update: {
+                    verb: 'PUT',
+                    fn: function(resource, payload) { return resource.update(payload); }
+                }
+            };
+
+            return {
+                get: function(url, parameters) {
+                    return $http({
+                        method: 'GET',
+                        url: domainApiUrl + url,
+                        headers: {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        },
+                        params: parameters
+                    });
+                },
+                post: function(uri, payload, params) {
+                    return getResourcePromise(
+                        uri,
+                        payload,
+                        params,
+                        null,
+                        'save');
+                },
+                put: function(uri, payload, params) {
+                    return getResourcePromise(
+                        uri,
+                        payload,
+                        params,
+                        null,
+                        'update');
+                },
+                remove: function(uri, params) {
+                    return getResourcePromise(
+                        uri,
+                        null,
+                        params,
+                        null,
+                        'delete');
+                }
+            };
+    });
+angular.module('AngularFormApp')
+    .service('AlertService', function () {
+
+        var alertService = {};
+        alertService.success = function (title, message) {
+            return alertService.displayMessage(title, message, "success");
+        }
+        alertService.error = function(title, message) {
+            return alertService.displayMessage(title, message, "error");
+        }
+        alertService.displayMessage = function(title, message, type) {
+            return swal(title, message, type);
+        }
+
+        return alertService;
+    });
+angular.module('AngularFormApp')
+    .service('formService', function (formConstants, ApiService) {
+
+        var formService = {};
+        formService.submit = function(form, callback) {
+            return ApiService.post(formConstants.API.SUBMIT, JSON.stringify(form), {})
+                .then(function successCallback(response) {
+                    callback(response);
+                }, function errorCallback(response) {
+                    debugger;
+                    callback(false);
+                });
+        }
+        formService.get = function(id) {
+
+        }
+        formService.getAll = function(callback) {
+            return ApiService.get(formConstants.API.GET_ALL, {})
+            .then(function successCallback(response) {
+                    callback(response.data);
+                }, function errorCallback(response) {
+                    callback(false);
+                });
+        }
+
+        return formService;
+    });
+angular.module('AngularFormApp')
+    .service('formNavigationService', function (formConstants, $state) {
+
+        this.isStart = function () {
+            var current = $state.current.name;
+            var index = formConstants.FORM.map(function (e) { return e.IS_START; }).indexOf(true);
+            return current === formConstants.FORM[index].KEY;
+        }
+        this.goToStart = function () {
+            var index = formConstants.FORM.map(function (e) { return e.IS_START; }).indexOf(true);
+            this.go(formConstants.FORM[index].KEY);
+        }
+        this.getNextStep = function () {
+            var current = $state.current.name;
+            var index = formConstants.FORM.map(function (e) { return e.KEY; }).indexOf(current);
+
+            if (formConstants.FORM[index].IS_END)
+                return null;
+
+            return formConstants.FORM[index + 1].KEY;
+        }
+        this.getPreviousStep = function () {
+            var current = $state.current.name;
+            var index = formConstants.FORM.map(function (e) { return e.KEY; }).indexOf(current);
+
+            if (formConstants.FORM[index].IS_START)
+                return null;
+
+            return formConstants.FORM[index - 1].KEY;
+        }
+
+    });
+angular.module('AngularFormApp')
+    .constant('formConstants', {
+        STEP_KEY: 'formStep',
+        FORM_KEY: 'formState',
         FORM_LIST: {
             KEY: 'formList'
         },
@@ -142,14 +336,15 @@ angular.module('AngularFormApp')
                 KEY: 'personalInfo',
                 TITLE: 'Personal Information',
                 IS_START: true
-            }, 
+            },
             {
                 KEY: 'address',
                 TITLE: 'Address'
             },
             {
                 KEY: 'education',
-                TITLE: 'Education'
+                TITLE: 'Education',
+                IS_END: true
             },
             {
                 KEY: 'employment',
@@ -170,7 +365,7 @@ angular.module('AngularFormApp')
             {
                 KEY: 'review',
                 TITLE: 'Review',
-                IS_END: true
+                //IS_END: true
             }
         ],
         STATES: [
@@ -410,228 +605,20 @@ angular.module('AngularFormApp')
                 "name": "Wyoming",
                 "abbreviation": "WY"
             }
-        ]
+        ],
+        API: {
+            SUBMIT: '/form/Submit',
+            GET_ALL: '/form/getall',
+            GET: ''
+        }
     });
 
 angular.module('AngularFormApp')
-    .service('NavigationService', function (appConstants, $state) {
-
-        this.isStart = function () {
-            var current = $state.current.name;
-            var index = appConstants.FORM.map(function (e) { return e.IS_START; }).indexOf(true);
-            return current === appConstants.FORM[index].KEY;
-        }
-        this.goToStart = function () {
-            var index = appConstants.FORM.map(function (e) { return e.IS_START; }).indexOf(true);
-            this.go(appConstants.FORM[index].KEY);
-        }
-        this.getNextState = function () {
-            var current = $state.current.name;
-            var index = appConstants.FORM.map(function (e) { return e.KEY; }).indexOf(current);
-
-            if (appConstants.FORM[index].IS_END)
-                return null;
-
-            return appConstants.FORM[index+1].KEY;
-        }
-        this.getPreviousState = function () {
-            var current = $state.current.name;
-            var index = appConstants.FORM.map(function (e) { return e.KEY; }).indexOf(current);
-
-            if (appConstants.FORM[index].IS_START)
-                return null;
-
-            return appConstants.FORM[index - 1].KEY;
-        }
-        this.go = function(state, stateObj) {
-            $state.go(state, stateObj);
-        }
-
-    });
-angular.module('AngularFormApp')
-    .service('StorageService', function ($window) {
-
-        this.getItem = function(key) {
-            return $window.localStorage.getItem(key);
-        }
-        this.setItem = function(key, value) {
-            $window.localStorage.setItem(key, value);
-        }
-        this.clearItem = function(key) {
-            $window.localStorage.removeItem(key, null);
-        }
-
-    });
-angular.module('AngularFormApp')
-    .service('ApiService',
-        function($http, $log, $q, $resource, appConstants) {
-
-            var domainApiUrl = appConstants.API_BASE;
-
-            function getResourcePromise(uri, payload, parameters, resourceConfig, resourceMethod, additionalHeaders) {
-                // calcualte URL
-                var url = domainApiUrl + uri;
-
-                // calculate HEADERS
-                var headers = angular
-                    .extend({},
-                        {
-                            'Accept': 'application/json,text/html',
-                        },
-                        additionalHeaders || {});
-
-                // calculate method
-                var method = methodMap[resourceMethod] || methodMap[resourceMethod].get;
-                var isGet = method.verb === 'GET';
-                var isAuthenticating = uri === appConstants.LOGIN_URI;
-
-                // initialize resource method configuration
-                resourceConfig[resourceMethod] = {
-                    headers: headers,
-                    method: method.verb
-                };
-
-                if (isGet) 
-                    resourceConfig[resourceMethod].isArray = false;
-                
-                if (isAuthenticating) 
-                    resourceConfig[resourceMethod].isArray = true;
-
-                return method.fn($resource(url, parameters || null, resourceConfig), payload).$promise;
-            }
-
-            var methodMap = {
-                delete: {
-                    verb: 'DELETE',
-                    fn: function(resource) { return resource.delete(); }
-                },
-                get: {
-                    verb: 'GET',
-                    fn: function(resource) { return resource.get(); }
-                },
-                query: {
-                    verb: 'GET',
-                    fn: function(resource) { return resource.query(); }
-                },
-                save: {
-                    verb: 'POST',
-                    fn: function(resource, payload) { return resource.save(payload); }
-                },
-                update: {
-                    verb: 'PUT',
-                    fn: function(resource, payload) { return resource.update(payload); }
-                }
-            };
-
-            return {
-                get: function(url, parameters) {
-                    return $http({
-                        method: 'GET',
-                        url: domainApiUrl + url,
-                        headers: {
-                            'Content-Type': 'application/json; charset=utf-8'
-                        },
-                        params: parameters
-                    });
-                },
-                post: function(uri, payload, params) {
-                    return getResourcePromise(
-                        uri,
-                        payload,
-                        params,
-                        null,
-                        'save');
-                },
-                put: function(uri, payload, params) {
-                    return getResourcePromise(
-                        uri,
-                        payload,
-                        params,
-                        null,
-                        'update');
-                },
-                remove: function(uri, params) {
-                    return getResourcePromise(
-                        uri,
-                        null,
-                        params,
-                        null,
-                        'delete');
-                }
-            };
-    });
-
-
-
-        //function (appConstants, $http, $q) {
-
-        //API
-        //this.submit = function (form) {
-        //    return $http({
-        //        method: 'POST',
-        //        url: appConstants.API_URL + 'Submit',
-        //        data: JSON.stringify(form)
-        //    });
-        //}
-        //this.getAll = function () {
-        //    return $http({
-        //        method: 'GET',
-        //        url: appConstants.API_URL + 'GetAll'
-        //    });
-        //}
-
-
-
-
-    //});
-angular.module('AngularFormApp')
-    .service('FormService', function (appConstants, ApiService) {
-
-        var formService = {};
-        formService.submit = function(form) {
-
-        }
-        formService.get = function(id) {
-
-        }
-        formService.getAll = function(callback) {
-            return ApiService.get('/form/getall', {})
-            .then(function successCallback(response) {
-                    callback(response.data);
-                }, function errorCallback(response) {
-                    callback(false);
-                });
-        }
-
-        return formService;
-    });
-
-
-
-        //function (appConstants, $http, $q) {
-
-        //API
-        //this.submit = function (form) {
-        //    return $http({
-        //        method: 'POST',
-        //        url: appConstants.API_URL + 'Submit',
-        //        data: JSON.stringify(form)
-        //    });
-        //}
-        //this.getAll = function () {
-        //    return $http({
-        //        method: 'GET',
-        //        url: appConstants.API_URL + 'GetAll'
-        //    });
-        //}
-
-    //});
-angular.module('AngularFormApp')
-    .controller('StatusSummaryController', function ($scope, $state, appConstants) {
+    .controller('StatusSummaryController', function ($scope, $state, appConstants, formConstants) {
 
         console.log('statusSummary init...');
 
-        var formSteps = appConstants.FORM;
+        var formSteps = formConstants.FORM;
         var statusString = '';
         for (var i = 0; i < formSteps.length; i++) {
             statusString = statusString.concat(formSteps[i].TITLE);
@@ -651,23 +638,23 @@ angular.module('AngularFormApp')
 
     });
 angular.module('AngularFormApp')
-    .controller('NavBarController', function ($scope, $state, appConstants) {
+    .controller('NavBarController', function ($scope, $state, appConstants, formConstants) {
 
         var currentState = $state.current.name;
         $scope.isHome = appConstants.HOME.KEY === currentState;
-        $scope.isForms = appConstants.FORM_LIST.KEY === currentState;
-        $scope.isForm = appConstants.FORM.KEY === currentState;
+        $scope.isForms = formConstants.FORM_LIST.KEY === currentState;
+        $scope.isForm = formConstants.FORM.KEY === currentState;
 
         $scope.goToHome = function () {
             $state.go(appConstants.HOME.KEY, {});
         };
 
         $scope.goToForms = function () {
-            $state.go(appConstants.FORM_LIST.KEY, {});
+            $state.go(formConstants.FORM_LIST.KEY, {});
         };
 
         $scope.goToFormStart = function () {
-            $state.go(appConstants.FORM[0].KEY, {});
+            $state.go(formConstants.FORM[0].KEY, {});
         };
 
     });
@@ -682,68 +669,81 @@ angular.module('AngularFormApp')
 
     });
 angular.module('AngularFormApp')
-    .controller('FormController', function ($scope, appConstants, StorageService, NavigationService, ApiService) {
+    .controller('FormController',
+    function ($scope, $state, formConstants, StorageService, AlertService, formNavigationService, formService) {
 
         $scope.isFormValid = true;
-        $scope.isStart = NavigationService.isStart();
+        $scope.isProcessing = false;
+        $scope.isStart = formNavigationService.isStart();
 
-        var formStr = StorageService.getItem(appConstants.FORM_KEY);
+        var formStr = StorageService.getItem(formConstants.FORM_KEY);
         $scope.form = formStr ? JSON.parse(formStr) : {};
 
         //go to start if no form & not on starting step
         if (!$scope.isStart) {
             if (!$scope.form) 
-                NavigationService.goToStart();
+                formNavigationService.goToStart();
         }
         
-        $scope.states = appConstants.STATES;
+        $scope.states = formConstants.STATES;
 
         $scope.back = function () {
-            var prevState = NavigationService.getPreviousState();
-            NavigationService.go(prevState);
+            var prevState = formNavigationService.getPreviousStep();
+            $state.go(prevState, {});
         }
         $scope.submit = function () {
 
             if ($scope.isFormValid) {
 
-                //save form to local storage
-                StorageService.setItem(appConstants.FORM_KEY, JSON.stringify($scope.form));
+                $scope.isProcessing = true;
 
-                var nextStep = NavigationService.getNextState();
+                //save form to local storage
+                StorageService.setItem(formConstants.FORM_KEY, JSON.stringify($scope.form));
+
+                var nextStep = formNavigationService.getNextStep();
 
                 if (nextStep) {
-                    NavigationService.go(nextStep);
-                    StorageService.setItem(appConstants.STEP_KEY, nextStep);
+                    $state.go(nextStep, {});
+                    StorageService.setItem(formConstants.STEP_KEY, nextStep);
                 }
-                //else {
-                //    ApiService.submit($scope.form);
-                //    StorageService.clearItem(appConstants.STEP_KEY);
-                //}
+                else {
+                    formService.submit($scope.form, function (response) {
+                        if (response && response.IsSuccess) {
+                            AlertService.success("Form saved!", "Thanks for your submission!")
+                                .then(function () {
+                                    $state.go(formConstants.FORM_LIST.KEY, {});
+                                    StorageService.clearItem(formConstants.FORM_KEY);
+                                    StorageService.clearItem(formConstants.STEP_KEY);
+                                });
+                        } else {
+                            AlertService.error("Error!", "An error has occurred!")
+                                .then(function () {
+                                    $state.go(formConstants.FORM_LIST.KEY, {});
+                                });
+                        }
+                    });
+                    
+                }
             }
         }
 
     });
 angular.module('AngularFormApp')
-    .controller('FormListController', function ($scope, appConstants, FormService) {
+    .controller('FormListController', function ($scope, appConstants, formService) {
 
         $scope.forms = [];
         $scope.isLoading = false;
         $scope.getForms = function () {
             $scope.isLoading = true;
-            FormService.getAll(function(response) {
-
+            formService.getAll(function (response) {
                 if (response) {
-                    debugger;
                     $scope.forms = response;
                 } else {
                     //handle error
                 }
-
                 $scope.isLoading = false;
             });
         };
 
         $scope.getForms();
-
-
     });

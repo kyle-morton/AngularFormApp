@@ -10,9 +10,7 @@ namespace AngularForm.Api.Interfaces.Form
     public interface IPerson
     {
 
-        string FirstName { get; set; }
-        string LastName { get; set; }
-        string DateOfBirth { get; set; }
+        Person Person { get; set; }
         Address Address { get; set; }
 
     }

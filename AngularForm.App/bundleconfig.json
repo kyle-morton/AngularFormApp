@@ -4,10 +4,12 @@
     "inputFiles": [
       "app.js",
       "Constants/constants.js",
-      "Services/navigation.js",
       "Services/storage.js",
       "Services/api.js",
+      "Services/alert.js",
       "App/form/js/services/form.js",
+      "App/form/js/services/formNavigation.js",
+      "App/form/js/constants/formConstants.js",
       "App/statusSummary/js/statusSummary.js",
       "App/navButtons/js/navButtons.js",
       "App/navBar/js/controllers/navBar.js",

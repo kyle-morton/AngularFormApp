@@ -1,9 +1,9 @@
 ﻿angular.module('AngularFormApp')
-    .controller('StatusSummaryController', function ($scope, $state, appConstants) {
+    .controller('StatusSummaryController', function ($scope, $state, appConstants, formConstants) {
 
         console.log('statusSummary init...');
 
-        var formSteps = appConstants.FORM;
+        var formSteps = formConstants.FORM;
         var statusString = '';
         for (var i = 0; i < formSteps.length; i++) {
             statusString = statusString.concat(formSteps[i].TITLE);

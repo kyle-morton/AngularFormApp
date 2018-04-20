@@ -50,9 +50,12 @@ namespace AngularForm.Api.Services.Mock
                 Id = new Guid("a71b30a1-c5a8-4ff6-b809-a9d54dc268e1"),
                 CreateDate = DateTime.Now.AddDays(-5),
                 ModifyDate = DateTime.Now.AddDays(-1),
-                FirstName = "Kyle",
-                LastName = "Morton",
-                DateOfBirth = "07/22/1991",
+                Person = new Person
+                {
+                    FirstName = "Kyle",
+                    LastName = "Morton",
+                    DateOfBirth = "07/22/1991"
+                },
                 Address = new Address
                 {
                     Street = "123 Main Street",
@@ -60,40 +63,46 @@ namespace AngularForm.Api.Services.Mock
                     State = "AR",
                     Zip = "72211"
                 },
-                HighSchool = "Paragould High School",
-                College = "Arkansas State University",
-                Degree = "Computer Science",
-                CurrentEmployer = new Employer
+                Education = new Education
                 {
-                    Name = "DFJ",
-                    StartDate = DateTime.Parse("6/5/2017")
+                    HighSchool = "Paragould High School",
+                    College = "Arkansas State University",
+                    Degree = "Computer Science"
                 },
-                FormerEmployer = new Employer
+                Employment = new Employment
                 {
-                    Name = "WEHCO Media, Inc.",
-                    StartDate = DateTime.Parse("8/25/2015"),
-                    EndDate = DateTime.Parse("6/2/2017")
-                },
-                Certifications = "C#, Html",
-                References = new List<Reference>
-                {
-                    new Reference
+                    CurrentEmployer = new Employer
                     {
-                        Name = "Aaron Dixon",
-                        Relationship = "Co-Worker",
-                        PhoneNumber = "555-555-5555"
+                        Name = "DFJ",
+                        StartDate = DateTime.Parse("6/5/2017")
                     },
-                    new Reference
+                    FormerEmployer = new Employer
                     {
-                        Name = "Hank Chadwick",
-                        Relationship = "Co-Worker",
-                        PhoneNumber = "555-555-5555"
+                        Name = "WEHCO Media, Inc.",
+                        StartDate = DateTime.Parse("8/25/2015"),
+                        EndDate = DateTime.Parse("6/2/2017")
                     },
-                    new Reference
+                    Certifications = "C#, Html",
+                    References = new List<Reference>
                     {
-                        Name = "Ashley Lawrence",
-                        Relationship = "Co-Worker",
-                        PhoneNumber = "555-555-5555"
+                        new Reference
+                        {
+                            Name = "Aaron Dixon",
+                            Relationship = "Co-Worker",
+                            PhoneNumber = "555-555-5555"
+                        },
+                        new Reference
+                        {
+                            Name = "Hank Chadwick",
+                            Relationship = "Co-Worker",
+                            PhoneNumber = "555-555-5555"
+                        },
+                        new Reference
+                        {
+                            Name = "Ashley Lawrence",
+                            Relationship = "Co-Worker",
+                            PhoneNumber = "555-555-5555"
+                        }
                     }
                 }
             }

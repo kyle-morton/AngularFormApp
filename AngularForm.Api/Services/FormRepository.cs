@@ -13,6 +13,8 @@ namespace AngularForm.Api.Services
 {
     public class FormRepository : MongoRepositoryBase, IFormRepository
     {
+
+        //TODO: optimize queries to use mongoDB driver (instead of getting entire collection into memory and then searching)
         
         #region CREATE
 
@@ -26,6 +28,8 @@ namespace AngularForm.Api.Services
                 );
 
                 form.Id = GetNewId(collection);
+                form.CreateDate = DateTime.Now;
+                form.ModifyDate = DateTime.Now;
                 collection.InsertOne(form);
             }
             catch (Exception ex)

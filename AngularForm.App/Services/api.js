@@ -22,16 +22,19 @@
                 var isAuthenticating = uri === appConstants.LOGIN_URI;
 
                 // initialize resource method configuration
-                resourceConfig[resourceMethod] = {
-                    headers: headers,
-                    method: method.verb
-                };
+                if (resourceConfig) {
+                    resourceConfig[resourceMethod] = {
+                        headers: headers,
+                        method: method.verb
+                    };
 
-                if (isGet) 
-                    resourceConfig[resourceMethod].isArray = false;
-                
-                if (isAuthenticating) 
-                    resourceConfig[resourceMethod].isArray = true;
+                    if (isGet)
+                        resourceConfig[resourceMethod].isArray = false;
+
+                    if (isAuthenticating)
+                        resourceConfig[resourceMethod].isArray = true;
+
+                }
 
                 return method.fn($resource(url, parameters || null, resourceConfig), payload).$promise;
             }
@@ -96,27 +99,3 @@
                 }
             };
     });
-
-
-
-        //function (appConstants, $http, $q) {
-
-        //API
-        //this.submit = function (form) {
-        //    return $http({
-        //        method: 'POST',
-        //        url: appConstants.API_URL + 'Submit',
-        //        data: JSON.stringify(form)
-        //    });
-        //}
-        //this.getAll = function () {
-        //    return $http({
-        //        method: 'GET',
-        //        url: appConstants.API_URL + 'GetAll'
-        //    });
-        //}
-
-
-
-
-    //});

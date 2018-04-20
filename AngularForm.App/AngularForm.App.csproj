@@ -72,17 +72,17 @@
     <None Include="packages.config" />
     <Content Include="App\formList\html\formList.html" />
     <Content Include="App\formList\js\controllers\formList.js" />
-    <Content Include="App\form\html\personalInfo.min.html">
-      <DependentUpon>personalInfo.html</DependentUpon>
-    </Content>
+    <Content Include="App\form\js\constants\formConstants.js" />
     <Content Include="App\form\js\controllers\form.js" />
     <Content Include="App\form\js\services\form.js" />
+    <Content Include="App\form\js\services\formNavigation.js" />
     <Content Include="App\navBar\html\navBar.html" />
     <Content Include="App\navBar\js\controllers\navBar.js" />
     <Content Include="App\navButtons\html\navButtons.html" />
     <Content Include="App\navButtons\js\navButtons.js" />
     <Content Include="App\statusSummary\html\statusSummary.html" />
     <Content Include="App\statusSummary\js\statusSummary.js" />
+    <Content Include="assets\content\images\loading.gif" />
     <Content Include="assets\scripts\angular-ui-router.js" />
     <Content Include="assets\scripts\angular-ui-router.min.js" />
     <Content Include="assets\scripts\sweetalert.min.js" />
@@ -92,8 +92,8 @@
     </Content>
     <Content Include="assets\scripts\angular-resource.js" />
     <Content Include="assets\scripts\angular-resource.min.js" />
+    <Content Include="Services\alert.js" />
     <Content Include="Services\api.js" />
-    <Content Include="Services\navigation.js" />
     <Content Include="Services\storage.js" />
     <Content Include="assets\scripts\angular-route.js" />
     <Content Include="assets\scripts\angular-route.min.js" />
@@ -183,7 +183,6 @@
     <Folder Include="App\form\js\directives\" />
     <Folder Include="App\form\js\filters\" />
     <Folder Include="assets\content\font-awesome\" />
-    <Folder Include="assets\content\images\" />
     <Folder Include="Widgets\reusableComponent1\" />
     <Folder Include="Widgets\reusableComponent2\" />
   </ItemGroup>

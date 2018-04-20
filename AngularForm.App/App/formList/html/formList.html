@@ -1,7 +1,11 @@
-﻿<h3>Submitted Forms</h3>
+﻿<h3>Submitted Forms (<a ng-click="getForms();" class="pointer" style="text-decoration: underline;">Refresh</a>)</h3>
 <br/>
 
-<table class="table">
+<div class="text-center" ng-if="isLoading === true"> 
+    <img src="/assets/content/images/loading.gif" alt="Loading..." />
+</div>
+
+<table class="table" ng-if="isLoading === false">
     <thead>
         <tr>
             <th>ID</th>
@@ -10,13 +14,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="form in forms">
-            <!--<td ng-bind=""></td>
-            <td ng-bind=""></td>
-            <td ng-bind=""></td>-->
-            <td>Form</td>
-            <td>!</td>
-            <td>!</td>
-        </tr>
+    <tr ng-repeat="form in forms">
+        <td ng-bind="form.Id"></td>
+        <td ng-bind="form.Person.FirstName + ' ' + form.Person.LastName"></td>
+        <td ng-bind="form.CreateDate"></td>
+    </tr>
     </tbody>
 </table>

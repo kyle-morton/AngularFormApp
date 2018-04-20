@@ -14,20 +14,12 @@ namespace AngularForm.Api.Models
         public DateTime ModifyDate { get; set; }
 
         //section 1
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string DateOfBirth { get; set; }
+        public Person Person { get; set; }
         //section 2
         public Address Address { get; set; }
         //section 3
-        public string HighSchool { get; set; }
-        public string College { get; set; }
-        public string Degree { get; set; }
+        public Education Education { get; set; }
         //section 4
-        public Employer CurrentEmployer { get; set; }
-        public Employer FormerEmployer { get; set; }
-        //section 5
-        public string Certifications { get; set; }
-        public IEnumerable<Reference> References { get; set; }
+        public Employment Employment { get; set; }
     }
 }

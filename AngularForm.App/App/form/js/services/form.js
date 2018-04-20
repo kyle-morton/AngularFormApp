@@ -1,15 +1,21 @@
 ﻿angular.module('AngularFormApp')
-    .service('FormService', function (appConstants, ApiService) {
+    .service('formService', function (formConstants, ApiService) {
 
         var formService = {};
-        formService.submit = function(form) {
-
+        formService.submit = function(form, callback) {
+            return ApiService.post(formConstants.API.SUBMIT, JSON.stringify(form), {})
+                .then(function successCallback(response) {
+                    callback(response);
+                }, function errorCallback(response) {
+                    debugger;
+                    callback(false);
+                });
         }
         formService.get = function(id) {
 
         }
         formService.getAll = function(callback) {
-            return ApiService.get('/form/getall', {})
+            return ApiService.get(formConstants.API.GET_ALL, {})
             .then(function successCallback(response) {
                     callback(response.data);
                 }, function errorCallback(response) {
@@ -19,24 +25,3 @@
 
         return formService;
     });
-
-
-
-        //function (appConstants, $http, $q) {
-
-        //API
-        //this.submit = function (form) {
-        //    return $http({
-        //        method: 'POST',
-        //        url: appConstants.API_URL + 'Submit',
-        //        data: JSON.stringify(form)
-        //    });
-        //}
-        //this.getAll = function () {
-        //    return $http({
-        //        method: 'GET',
-        //        url: appConstants.API_URL + 'GetAll'
-        //    });
-        //}
-
-    //});
