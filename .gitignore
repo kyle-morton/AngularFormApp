@@ -3,6 +3,10 @@
 /AngularForm.Api/obj
 /AngularForm.App/bin
 /AngularForm.App/obj
+/AngularForm.Logic/bin
+/AngularForm.Logic/obj
+/AngularForm.Data/bin
+/AngularForm.Data/obj
 /AngularForm.Test/bin
 /AngularForm.Test/obj
 .vs/
