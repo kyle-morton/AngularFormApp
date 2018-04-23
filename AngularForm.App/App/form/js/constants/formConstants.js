@@ -283,6 +283,7 @@
         API: {
             SUBMIT: '/form/Submit',
             GET_ALL: '/form/getall',
-            GET: ''
+            GET: 'form/get',
+            DELETE: '/form/delete'
         }
     });

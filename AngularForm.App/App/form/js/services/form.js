@@ -22,6 +22,15 @@
                     callback(false);
                 });
         }
+        formService.delete = function (id, callback) {
+
+            return ApiService.remove(formConstants.API.DELETE + '?id=' + id, {})
+                .then(function successCallback(response) {
+                    callback(response.data);
+                }, function errorCallback(response) {
+                    callback(false);
+                });
+        }
 
         return formService;
     });
