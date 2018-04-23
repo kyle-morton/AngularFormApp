@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AngularForm.Api.Services;
+using AngularForm.Logic.Repositories;
 
 namespace AngularForm.Api.Controllers
 {
@@ -21,16 +22,22 @@ namespace AngularForm.Api.Controllers
         /// <returns></returns>
         public IEnumerable<IResume> GetAll()
         {
-            return new FormRepository().GetForms().ToList();
+            return new FormRepository().GetAll().ToList();
         }
 
         public IResume Get(string id)
         {
-            return new FormRepository().GetForm(Guid.Parse(id));
+            Guid result;
+            if (Guid.TryParse(id, out result))
+            {
+                return new FormRepository().Get(result);
+            }
+
+            return null;
         }
 
         [HttpPost]
-        public ResponseMessage Submit([FromBody]ApplicationForm form)
+        public ResponseMessage Submit([FromBody]Form form)
         {
             try
             {

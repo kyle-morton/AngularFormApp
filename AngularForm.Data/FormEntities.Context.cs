@@ -13,10 +13,10 @@ namespace AngularForm.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AngularFormEntities : DbContext
+    public partial class FormEntities : DbContext
     {
-        public AngularFormEntities()
-            : base("name=AngularFormEntities")
+        public FormEntities()
+            : base("name=FormEntities")
         {
         }
     
@@ -25,13 +25,6 @@ namespace AngularForm.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Address> Addresses { get; set; }
-        public virtual DbSet<Certification> Certifications { get; set; }
-        public virtual DbSet<Education> Educations { get; set; }
-        public virtual DbSet<Employer> Employers { get; set; }
-        public virtual DbSet<Form> Forms { get; set; }
-        public virtual DbSet<Hobbie> Hobbies { get; set; }
-        public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<Reference> References { get; set; }
+        public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
     }
 }

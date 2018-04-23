@@ -1,13 +1,10 @@
-﻿using AngularForm.Api.Interfaces;
-using AngularForm.Api.Interfaces.Form;
+﻿using AngularForm.Api.Interfaces.Form;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AngularForm.Api.Models
 {
-    public class ApplicationForm : IResume
+    public class Form : IResume
     {
         public Guid Id { get; set; }
         public DateTime CreateDate { get; set; }
