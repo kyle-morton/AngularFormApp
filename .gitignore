@@ -1,4 +1,4 @@
-/packages
+packages/
 /AngularForm.Api/bin
 /AngularForm.Api/obj
 /AngularForm.App/bin
@@ -10,3 +10,4 @@
 /AngularForm.Test/bin
 /AngularForm.Test/obj
 .vs/
+
