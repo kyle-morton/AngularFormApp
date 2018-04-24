@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace AngularForm.Logic.Interfaces
 {
     public interface IRepository<T>
     {
         T Get(Guid id);
-        IEnumerable<T> GetAll();
-        void Create(T obj);
-        void Update(Guid id, T obj);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null);
+        void Create(T entity);
+        void Update(Guid id, T entity);
         void Delete(Guid id);
     }
 }

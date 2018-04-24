@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AngularForm.Api.Models
+﻿namespace AngularForm.Api.Models
 {
     public class ResponseMessage
     {

@@ -1,11 +1,11 @@
-﻿using AngularForm.Api.Interfaces.Form;
-using AngularForm.Api.Models;
+﻿using AngularForm.Api.Models;
+using AngularForm.Data;
+using AngularForm.Logic.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using AngularForm.Logic.Repositories;
 
 namespace AngularForm.Api.Controllers
 {
@@ -19,20 +19,17 @@ namespace AngularForm.Api.Controllers
         /// http://localhost:61109/api/form/GetAll
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IResume> GetAll()
+        public IEnumerable<Form> GetAll()
         {
             return new FormRepository().GetAll().ToList();
         }
 
-        public IResume Get(string id)
+        public Form Get(string id)
         {
             Guid result;
-            if (Guid.TryParse(id, out result))
-            {
-                return new FormRepository().Get(result);
-            }
-
-            return null;
+            return Guid.TryParse(id, out result) 
+                ? new FormRepository().Get(result) 
+                : null;
         }
 
         [HttpPost]
@@ -53,7 +50,7 @@ namespace AngularForm.Api.Controllers
         }
 
         [HttpPut]
-        public void Update(int id, IResume form)
+        public void Update(int id, Form form)
         {
 
         }
@@ -63,7 +60,8 @@ namespace AngularForm.Api.Controllers
         {
             try
             {
-                new FormRepository().Delete(Guid.Parse(id));
+                if (Guid.TryParse(id, out var guid))
+                    new FormRepository().Delete(guid);
                 return new ResponseMessage {IsSuccess = true};
             }
             catch (Exception ex)

@@ -12,9 +12,12 @@ namespace AngularForm.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ApplicationForm
+    public partial class Employer
     {
-        public System.Guid Id { get; set; }
-        public string FormBody { get; set; }
+        public int Id { get; set; }
+        public System.Guid FormId { get; set; }
+        public string Name { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
     }
 }

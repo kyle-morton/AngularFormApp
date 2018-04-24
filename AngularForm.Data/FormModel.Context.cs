@@ -25,6 +25,12 @@ namespace AngularForm.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Education> Educations { get; set; }
+        public virtual DbSet<Employer> Employers { get; set; }
+        public virtual DbSet<Form> Forms { get; set; }
+        public virtual DbSet<MiscInformation> MiscInformations { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Reference> References { get; set; }
     }
 }

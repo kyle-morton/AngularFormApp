@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AngularForm.Data;
+﻿using AngularForm.Data;
 using AngularForm.Logic.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace AngularForm.Logic.Repositories
 {
@@ -19,11 +17,11 @@ namespace AngularForm.Logic.Repositories
 
         public abstract T Get(Guid id);
 
-        public abstract IEnumerable<T> GetAll();
+        public abstract IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null);
 
-        public abstract void Create(T obj);
+        public abstract void Create(T entity);
 
-        public abstract void Update(Guid id, T obj);
+        public abstract void Update(Guid id, T entity);
 
         public abstract void Delete(Guid id);
 

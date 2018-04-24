@@ -4,8 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7daab0ce1e1f4edf84ba94f5e6abcae3" Name="Diagram1">
-        <EntityTypeShape EntityType="FormModel.ApplicationForm" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="7daab0ce1e1f4edf84ba94f5e6abcae3" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="FormModel.Address" Width="1.5" PointX="5.625" PointY="4.375" />
+        <EntityTypeShape EntityType="FormModel.Education" Width="1.5" PointX="5.625" PointY="7.25" />
+        <EntityTypeShape EntityType="FormModel.Employer" Width="1.5" PointX="5.625" PointY="15.5" />
+        <EntityTypeShape EntityType="FormModel.Form" Width="1.5" PointX="3.375" PointY="8.25" />
+        <EntityTypeShape EntityType="FormModel.MiscInformation" Width="1.5" PointX="5.625" PointY="10" />
+        <EntityTypeShape EntityType="FormModel.Person" Width="1.5" PointX="5.625" PointY="1.625" />
+        <EntityTypeShape EntityType="FormModel.Reference" Width="1.5" PointX="5.625" PointY="12.5" />
+        <AssociationConnector Association="FormModel.FK_Address_Form" />
+        <AssociationConnector Association="FormModel.FK_Education_Form" />
+        <AssociationConnector Association="FormModel.FK_Employer_Form" />
+        <AssociationConnector Association="FormModel.FK_MiscInformation_Form" />
+        <AssociationConnector Association="FormModel.FK_Person_Form" />
+        <AssociationConnector Association="FormModel.FK_Reference_Form" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

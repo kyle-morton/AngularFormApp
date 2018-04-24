@@ -49,7 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationForm.cs">
+    <Compile Include="Address.cs">
+      <DependentUpon>FormModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Education.cs">
+      <DependentUpon>FormModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employer.cs">
+      <DependentUpon>FormModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Form.cs">
       <DependentUpon>FormModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FormModel.Context.cs">
@@ -67,7 +76,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FormModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MiscInformation.cs">
+      <DependentUpon>FormModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Person.cs">
+      <DependentUpon>FormModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reference.cs">
+      <DependentUpon>FormModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

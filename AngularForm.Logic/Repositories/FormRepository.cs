@@ -1,36 +1,22 @@
-﻿using System;
+﻿using AngularForm.Data;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using AngularForm.Api.Interfaces;
-using AngularForm.Api.Interfaces.Form;
-using AngularForm.Api.Models;
-using AngularForm.Data;
-using AngularForm.Logic.Interfaces;
-using Newtonsoft.Json;
 
 namespace AngularForm.Logic.Repositories
 {
-    public class FormRepository : RepositoryBase<IResume>
+    public class FormRepository : RepositoryBase<Form>
     {
 
         #region CREATE
         
-        public override void Create(IResume obj)
+        public override void Create(Form entity)
         {
-            var id = GetNewId();
-            var now = DateTime.Now;
-            obj.Id = id;
-            obj.CreateDate = obj.ModifyDate = now;
-            var appForm = new ApplicationForm
-            {
-                Id = id,
-                FormBody = JsonConvert.SerializeObject(obj)
-            };
-            dbContext.ApplicationForms.Add(appForm);
+            entity.Id = GetNewId();
+            entity.CreateDate = entity.ModifyDate = DateTime.Now;
+            dbContext.Forms.Add(entity);
             Save();
         }
 
@@ -40,7 +26,7 @@ namespace AngularForm.Logic.Repositories
 
         public override void Delete(Guid id)
         {
-            var form = new ApplicationForm {Id = id};
+            var form = new Form {Id = id};
             dbContext.Entry(form).State = EntityState.Deleted;
             Save();
         }
@@ -49,30 +35,35 @@ namespace AngularForm.Logic.Repositories
 
         #region SEARCH
 
-        public override IResume Get(Guid id)
+        public override Form Get(Guid id)
         {
             return GetAll().SingleOrDefault(f => f.Id == id);
         }
 
-        public override IEnumerable<IResume> GetAll()
+        public override IEnumerable<Form> GetAll(Expression<Func<Form, bool>> filter = null)
         {
-            var results = dbContext.ApplicationForms.ToList();
-            return results.Select(f => 
-                string.IsNullOrEmpty(f.FormBody) ? null : JsonConvert.DeserializeObject<Form>(f.FormBody));
+            return dbContext.Forms.Where(filter ?? (f => true));
         }
 
         #endregion
 
         #region UPDATE
 
-        public override void Update(Guid id, IResume obj)
+        public override void Update(Guid id, Form entity)
         {
-            var record = dbContext.ApplicationForms.SingleOrDefault(f => f.Id == id);
+            var record = GetAll().SingleOrDefault(f => f.Id == id);
             if (record == null)
                 return;
 
-            obj.ModifyDate = DateTime.Now;
-            record.FormBody = JsonConvert.SerializeObject(obj);
+            record.Person = entity.Person;
+            record.Address = entity.Address;
+            record.Education = entity.Education;
+            record.Employers = entity.Employers;
+            record.MiscInformation = entity.MiscInformation;
+            record.References = entity.References;
+            record.ModifyDate = DateTime.Now;
+            dbContext.Entry(record).State = EntityState.Modified;
+
             Save();
         }
 
@@ -87,7 +78,7 @@ namespace AngularForm.Logic.Repositories
             do
             {
                 id = Guid.NewGuid();
-                exists = dbContext.ApplicationForms.Any(f => f.Id == id);
+                exists = GetAll().Any(f => f.Id == id);
             } while (exists);
 
             return id;

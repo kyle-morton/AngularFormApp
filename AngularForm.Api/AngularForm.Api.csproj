@@ -216,6 +216,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AngularForm.Data\AngularForm.Data.csproj">
+      <Project>{823a1d70-54d9-4ecd-a47c-241efca4e764}</Project>
+      <Name>AngularForm.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AngularForm.Logic\AngularForm.Logic.csproj">
       <Project>{9867f27d-a927-4f47-933d-b2a061d35138}</Project>
       <Name>AngularForm.Logic</Name>

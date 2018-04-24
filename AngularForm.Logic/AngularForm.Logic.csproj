@@ -51,19 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\Form\IEducation.cs" />
-    <Compile Include="Interfaces\Form\IEmployment.cs" />
-    <Compile Include="Interfaces\Form\IIdentifable.cs" />
-    <Compile Include="Interfaces\Form\IPerson.cs" />
-    <Compile Include="Interfaces\Form\IResume.cs" />
-    <Compile Include="Interfaces\IFormRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Models\Form\Address.cs" />
-    <Compile Include="Models\Form\Form.cs" />
-    <Compile Include="Models\Form\Education.cs" />
-    <Compile Include="Models\Form\Employer.cs" />
-    <Compile Include="Models\Form\Person.cs" />
-    <Compile Include="Models\Form\Reference.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\FormRepository.cs" />
