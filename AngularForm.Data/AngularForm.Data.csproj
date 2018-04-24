@@ -50,33 +50,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationForm.cs">
-      <DependentUpon>FormEntities.tt</DependentUpon>
+      <DependentUpon>FormModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="FormEntities.Context.cs">
+    <Compile Include="FormModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FormEntities.Context.tt</DependentUpon>
+      <DependentUpon>FormModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="FormEntities.cs">
+    <Compile Include="FormModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FormEntities.tt</DependentUpon>
+      <DependentUpon>FormModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="FormEntities.Designer.cs">
+    <Compile Include="FormModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FormEntities.edmx</DependentUpon>
+      <DependentUpon>FormModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="FormEntities.edmx">
+    <EntityDeploy Include="FormModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FormEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>FormModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="FormEntities.edmx.diagram">
-      <DependentUpon>FormEntities.edmx</DependentUpon>
+    <None Include="FormModel.edmx.diagram">
+      <DependentUpon>FormModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -84,15 +84,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FormEntities.Context.tt">
+    <Content Include="FormModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FormEntities.edmx</DependentUpon>
-      <LastGenOutput>FormEntities.Context.cs</LastGenOutput>
+      <DependentUpon>FormModel.edmx</DependentUpon>
+      <LastGenOutput>FormModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="FormEntities.tt">
+    <Content Include="FormModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FormEntities.edmx</DependentUpon>
-      <LastGenOutput>FormEntities.cs</LastGenOutput>
+      <DependentUpon>FormModel.edmx</DependentUpon>
+      <LastGenOutput>FormModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

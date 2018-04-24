@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AngularFormModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FormModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ApplicationForm">
           <Key>
             <PropertyRef Name="Id" />
@@ -12,34 +12,35 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FormBody" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="AngularFormModelStoreContainer">
+        <EntityContainer Name="FormModelStoreContainer">
           <EntitySet Name="ApplicationForm" EntityType="Self.ApplicationForm" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="AngularFormModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="FormEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ApplicationForms" EntityType="AngularFormModel.ApplicationForm" />
-        </EntityContainer>
+      <Schema Namespace="FormModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="ApplicationForm">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="FormBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FormBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <EntityContainer Name="FormEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ApplicationForms" EntityType="Self.ApplicationForm" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AngularFormModelStoreContainer" CdmEntityContainer="FormEntities">
+        <EntityContainerMapping StorageEntityContainer="FormModelStoreContainer" CdmEntityContainer="FormEntities">
           <EntitySetMapping Name="ApplicationForms">
-            <EntityTypeMapping TypeName="AngularFormModel.ApplicationForm">
+            <EntityTypeMapping TypeName="FormModel.ApplicationForm">
               <MappingFragment StoreEntitySet="ApplicationForm">
-                <ScalarProperty Name="FormBody" ColumnName="FormBody" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FormBody" ColumnName="FormBody" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
