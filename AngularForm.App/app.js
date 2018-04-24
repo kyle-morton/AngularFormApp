@@ -44,7 +44,7 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                         reusableViewBase,
                         {
                             contentView: {
-                                templateUrl: 'App/formList/html/formList.html',
+                                templateUrl: 'App/form/html/viewAll.html',
                                 controller: 'FormListController'
                             }
                         })

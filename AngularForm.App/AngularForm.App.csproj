@@ -70,6 +70,7 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <Content Include="App\form\html\hobbies.html" />
+    <Content Include="App\form\html\viewAll.html" />
     <Content Include="assets\styles\font-awesome.min.css" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\fonts\FontAwesome.otf" />
@@ -78,8 +79,7 @@
     <Content Include="assets\fonts\fontawesome-webfont.ttf" />
     <Content Include="assets\fonts\fontawesome-webfont.eot" />
     <None Include="packages.config" />
-    <Content Include="App\formList\html\formList.html" />
-    <Content Include="App\formList\js\controllers\formList.js" />
+    <Content Include="App\form\js\controllers\formList.js" />
     <Content Include="App\form\js\constants\formConstants.js" />
     <Content Include="App\form\js\controllers\form.js" />
     <Content Include="App\form\js\services\form.js" />
@@ -100,6 +100,22 @@
     </Content>
     <Content Include="assets\scripts\angular-resource.js" />
     <Content Include="assets\scripts\angular-resource.min.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\alert.js" />
     <Content Include="Services\api.js" />
     <Content Include="Services\storage.js" />
@@ -110,6 +126,23 @@
     <Content Include="assets\scripts\jquery-3.3.1.min.map" />
     <Content Include="assets\scripts\angular-route.min.js.map" />
     <Content Include="assets\scripts\angular-resource.min.js.map" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -181,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="assets\scripts\index.d.ts" />
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

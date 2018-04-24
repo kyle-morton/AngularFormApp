@@ -44,7 +44,7 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
                         reusableViewBase,
                         {
                             contentView: {
-                                templateUrl: 'App/formList/html/formList.html',
+                                templateUrl: 'App/form/html/viewAll.html',
                                 controller: 'FormListController'
                             }
                         })
@@ -701,9 +701,11 @@ angular.module('AngularFormApp')
             var prevState = formNavigationService.getPreviousStep();
             $state.go(prevState, {});
         }
-        $scope.submit = function () {
+        $scope.submit = function (isValid) {
+            $scope.submitted = true;
+            console.log('submitted...');
 
-            if ($scope.isFormValid) {
+            if (isValid) {
 
                 $scope.isProcessing = true;
 

@@ -2,29 +2,52 @@
 
     <h3>Personal Information</h3>
     <hr />
-
-    <div class="form-group">
-        <label>First Name</label>
-        <input type="text" class="form-control" placeholder="first name" ng-model="form.Person.FirstName">
-    </div>
-    <div class="form-group">
-        <label>Last Name</label>
-        <input type="text" class="form-control" placeholder="last name" ng-model="form.Person.LastName">
-    </div>
-    <div class="form-group">
-        <label>Date of Birth</label>
-        <input type="text" class="form-control" placeholder="MM/DD/YYYY" ng-model="form.Person.DateOfBirth">
-    </div>
-
-    <!--<div ui-view="navButtons"></div>-->
-
-    <div class="row">
-        <div class="col" ng-if="isStart === false">
-            <button type="button" class="btn btn-secondary" >Back</button>
+    
+    <form name="userForm" ng-submit="submit(userForm.$valid)" novalidate>
+    
+        <div>
+            <div class="form-group" ng-class="{ 'has-danger' : userForm.firstName.$invalid}">
+                <label class="form-control-label">First Name</label>
+                <input type="text" class="form-control" placeholder="first name" name="firstName" 
+                       ng-class="{'is-invalid': userForm.firstName.$invalid && (userForm.firstName.$touched || submitted)}"
+                       ng-model="form.Person.FirstName" required>
+                <p class="form-text text-danger" ng-show="userForm.firstName.$invalid && (userForm.firstName.$touched || submitted)">
+                    Valid First Name Required
+                </p>
+            </div>
+            <div class="form-group" ng-class="{ 'has-danger' : userForm.lastName.$invalid}">
+                <label class="form-control-label">Last Name</label>
+                <input type="text" class="form-control" placeholder="last name" 
+                       ng-class="{'is-invalid': userForm.lastName.$invalid && (userForm.lastName.$touched || submitted)}"
+                       name="lastName" ng-model="form.Person.LastName" required>
+                <p class="form-text text-danger" ng-show="userForm.lastName.$invalid && (userForm.lastName.$touched || submitted)">
+                    Valid Last Name Required
+                </p>
+            </div>
+            <div class="form-group" ng-class="{ 'has-danger' : userForm.dateOfBirth.$invalid}">
+                <label class="form-control-label">Date of Birth</label>
+                <input type="text" class="form-control" placeholder="MM/DD/YYYY" 
+                       ng-class="{'is-invalid': userForm.dateOfBirth.$invalid && (userForm.dateOfBirth.$touched || submitted)}"
+                       name="dateOfBirth" ng-model="form.Person.DateOfBirth" required>
+                <p class="form-text text-danger" ng-show="userForm.dateOfBirth.$invalid && (userForm.dateOfBirth.$touched || submitted)">
+                    Valid D.O.B. Required
+                </p>
+            </div>
         </div>
-        <div class="col" ng-if="isFormValid === true">
-            <button type="button" class="btn btn-primary" ng-click="submit();">Next</button>
+
+
+
+        <!--<div ui-view="navButtons"></div>-->
+
+        <div class="row">
+            <div class="col" ng-if="isStart === false">
+                <button type="button" class="btn btn-secondary" >Back</button>
+            </div>
+            <div class="col" ng-if="isFormValid === true">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </div>
         </div>
-    </div>
+    
+    </form>
 
 </div>

@@ -15,7 +15,7 @@
       "App/navBar/js/controllers/navBar.js",
       "App/home/js/controllers/home.js",
       "App/form/js/controllers/form.js",
-      "App/formList/js/controllers/formList.js"
+      "App/form/js/controllers/formList.js"
     ]
   }
 ]
