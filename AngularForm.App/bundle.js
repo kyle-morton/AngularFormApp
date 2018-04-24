@@ -291,7 +291,7 @@ angular.module('AngularFormApp')
         }
         formService.delete = function (id, callback) {
 
-            return ApiService.remove(formConstants.API.DELETE + '?id=' + id, {})
+            return ApiService.remove(formConstants.API.DELETE, {id})
                 .then(function successCallback(response) {
                     callback(response.data);
                 }, function errorCallback(response) {
