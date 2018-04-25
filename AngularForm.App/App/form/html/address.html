@@ -6,7 +6,7 @@
     <form name="userForm" ng-submit="submit(userForm.$valid)" novalidate>
 
 
-        <div class="form-group" ng-class="{ 'has-danger' : userForm.street.$invalid}">
+        <div class="form-group required" ng-class="{ 'has-danger' : userForm.street.$invalid}">
             <label>Street</label>
             <input type="text" class="form-control" placeholder="Street" name="street" 
                    ng-class="{'is-invalid': userForm.street.$invalid && (userForm.street.$touched || submitted)}"
@@ -15,7 +15,7 @@
                 Valid Street Required
             </p>
         </div>
-        <div class="form-group" ng-class="{ 'has-danger' : userForm.city.$invalid}">
+        <div class="form-group required" ng-class="{ 'has-danger' : userForm.city.$invalid}">
             <label>City</label>
             <input type="text" class="form-control" placeholder="city" name="city" 
                    ng-class="{'is-invalid': userForm.city.$invalid && (userForm.city.$touched || submitted)}"
@@ -24,16 +24,30 @@
                 Valid City Required
             </p>
         </div>
-        <div class="form-group">
+        <div class="form-group required" ng-class="{ 'has-danger' : userForm.city.$invalid}">
             <label>State</label>
             <select ng-model="form.Address.State"
-                    ng-options="state.abbreviation for state in states"
-                    ng-init="form.Address.State = form.Address.State || states[0].abbreviation"
-                    class="form-control"></select>
+                    ng-class="{'is-invalid': userForm.state.$invalid && (userForm.state.$touched || submitted)}"
+                    name="state"
+                    class="form-control" required>
+                <option value="">Choose a state</option>
+                <option ng-repeat="state in states"
+                        ng-value="state.abbreviation"
+                        ng-bind="state.abbreviation">
+                </option>
+            </select>
+            <p class="form-text text-danger" ng-show="userForm.state.$invalid && (userForm.state.$touched || submitted)">
+                Valid State Required
+            </p>
         </div>
-        <div class="form-group">
-            <label>Zip Code</label>
-            <input type="text" class="form-control" placeholder="zip code" ng-model="form.Address.Zip" maxlength="5">
+        <div class="form-group required" ng-class="{ 'has-danger' : userForm.zip.$invalid}">
+            <label>Zip-Code</label>
+            <input type="text" class="form-control" placeholder="zip" name="zip" 
+                   ng-class="{'is-invalid': userForm.zip.$invalid && (userForm.zip.$touched || submitted)}"
+                   ng-model="form.Address.Zip" required>
+            <p class="form-text text-danger" ng-show="userForm.zip.$invalid && (userForm.zip.$touched || submitted)">
+                Valid Zip-Code Required
+            </p>
         </div>
 
         <div class="row">

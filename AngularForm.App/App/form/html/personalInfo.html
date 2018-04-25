@@ -6,7 +6,7 @@
     <form name="userForm" ng-submit="submit(userForm.$valid)" novalidate>
     
         <div>
-            <div class="form-group" ng-class="{ 'has-danger' : userForm.firstName.$invalid}">
+            <div class="form-group required" ng-class="{ 'has-danger' : userForm.firstName.$invalid}">
                 <label>First Name</label>
                 <input type="text" class="form-control" placeholder="first name" name="firstName" 
                        ng-class="{'is-invalid': userForm.firstName.$invalid && (userForm.firstName.$touched || submitted)}"
@@ -15,7 +15,7 @@
                     Valid First Name Required
                 </p>
             </div>
-            <div class="form-group" ng-class="{ 'has-danger' : userForm.lastName.$invalid}">
+            <div class="form-group required" ng-class="{ 'has-danger' : userForm.lastName.$invalid}">
                 <label>Last Name</label>
                 <input type="text" class="form-control" placeholder="last name" 
                        ng-class="{'is-invalid': userForm.lastName.$invalid && (userForm.lastName.$touched || submitted)}"
@@ -24,7 +24,7 @@
                     Valid Last Name Required
                 </p>
             </div>
-            <div class="form-group" ng-class="{ 'has-danger' : userForm.dateOfBirth.$invalid}">
+            <div class="form-group required" ng-class="{ 'has-danger' : userForm.dateOfBirth.$invalid}">
                 <label>Date of Birth</label>
                 <input type="text" class="form-control" placeholder="MM/DD/YYYY" 
                        ng-class="{'is-invalid': userForm.dateOfBirth.$invalid && (userForm.dateOfBirth.$touched || submitted)}"
