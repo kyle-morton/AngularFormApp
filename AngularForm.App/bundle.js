@@ -650,19 +650,18 @@ angular.module('FormModule')
 angular.module('StatusSummaryModule', [])
     .controller('StatusSummaryController', function ($scope, $state, appConstants, formConstants) {
 
-        console.log('statusSummary init...');
-
-        var formSteps = formConstants.FORM;
-        var statusString = '';
-        for (var i = 0; i < formSteps.length; i++) {
-            statusString = statusString.concat(formSteps[i].TITLE);
-            if (formSteps[i].KEY === $state.current.name)
-                break;
-            else
-                statusString = statusString.concat(' -> ');
+        $scope.steps = [];
+        for (var i = 0; i < formConstants.FORM.length; i++) {
+            var step = formConstants.FORM[i];
+            $scope.steps.push({
+                'name': step.KEY,
+                'isCurrent': $state.current.name === step.KEY
+            });
         }
 
-        $scope.statusString = statusString;
+        $scope.goToStep = function(step) {
+            console.log('step: ' + step);
+        }
 
     });
 angular.module('NavButtonModule', [])
