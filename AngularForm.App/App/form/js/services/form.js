@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('FormModule', [])
     .service('formService', function (formConstants, ApiService) {
 
         var formService = {};
@@ -14,8 +14,8 @@
         formService.get = function(id) {
 
         }
-        formService.getAll = function(callback) {
-            return ApiService.get(formConstants.API.GET_ALL, {})
+        formService.getActive = function(callback) {
+            return ApiService.get(formConstants.API.GET_ACTIVE, {})
             .then(function successCallback(response) {
                     callback(response.data);
                 }, function errorCallback(response) {
@@ -25,8 +25,9 @@
         formService.delete = function (id, callback) {
 
             return ApiService.remove(formConstants.API.DELETE, {id})
-                .then(function successCallback(response) {
-                    callback(response.data);
+                .then(
+                function successCallback(response) {
+                    callback(response);
                 }, function errorCallback(response) {
                     callback(false);
                 });

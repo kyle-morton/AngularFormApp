@@ -24,6 +24,16 @@ namespace AngularForm.Api.Controllers
             return new FormRepository().GetAll().ToList();
         }
 
+        /// <summary>
+        /// get all form - 
+        /// http://localhost:61109/api/form/GetActive
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Form> GetActive()
+        {
+            return new FormRepository().GetAll(f => f.IsActive).ToList();
+        }
+
         public Form Get(string id)
         {
             Guid result;

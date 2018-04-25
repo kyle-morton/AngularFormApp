@@ -1,6 +1,7 @@
 ﻿'use strict';
 
-angular.module('AngularFormApp', ['ui.router', 'ngResource']) 
+angular.module('AngularFormApp', ['ui.router', 'ngResource',
+    'ServicesModule', 'ConstantsModule', 'FormModule', 'HomeModule', 'NavBarModule', 'NavButtonModule', 'StatusSummaryModule']) 
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants, formConstants) {
 
         $urlRouterProvider.otherwise('/home');

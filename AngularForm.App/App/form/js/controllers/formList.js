@@ -1,11 +1,11 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('FormModule')
     .controller('FormListController', function ($scope, appConstants, formService, AlertService) {
 
         $scope.forms = [];
         $scope.isLoading = false;
         $scope.getForms = function () {
             $scope.isLoading = true;
-            formService.getAll(function (response) {
+            formService.getActive(function (response) {
                 if (response) {
                     $scope.forms = response;
                 } else {
@@ -20,22 +20,21 @@
 
 
         }
-        $scope.delete = function(form) {
-            console.log('deleting: ' + form.Id);
+        $scope.delete = function (form) {
 
-            formService.delete(form.Id, function(response) {
-                if (response) {
-
-                    AlertService.success("Form saved!", "Thanks for your submission!")
-                        .then(function () {
-                            //remove from scope array...
-                        });
-                } else {
-
+            AlertService.prompt('Are you sure?')
+            .then(function(choice) {
+              
+                if (choice) {
+                    formService.delete(form.Id, function (response) {
+                        if (response) {
+                            $scope.getForms();
+                        }
+                    });
                 }
 
-            });
 
+            });
         }
 
         $scope.getForms();

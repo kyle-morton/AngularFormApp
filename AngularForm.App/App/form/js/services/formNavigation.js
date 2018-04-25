@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('FormModule')
     .service('formNavigationService', function (formConstants, $state) {
 
         this.isStart = function () {

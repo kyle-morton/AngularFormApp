@@ -11,7 +11,8 @@
                 <input type="text" class="form-control" placeholder="first name" name="firstName" 
                        ng-class="{'is-invalid': userForm.firstName.$invalid && (userForm.firstName.$touched || submitted)}"
                        ng-model="form.Person.FirstName" required>
-                <p class="form-text text-danger" ng-show="userForm.firstName.$invalid && (userForm.firstName.$touched || submitted)">
+                <p class="form-text text-danger" 
+                   ng-show="userForm.firstName.$invalid && (userForm.firstName.$touched || submitted)">
                     Valid First Name Required
                 </p>
             </div>
@@ -34,10 +35,6 @@
                 </p>
             </div>
         </div>
-
-
-
-        <!--<div ui-view="navButtons"></div>-->
 
         <div class="row">
             <div class="col" ng-if="isStart === false">

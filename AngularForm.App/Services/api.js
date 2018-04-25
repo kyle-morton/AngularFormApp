@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('ServicesModule')
     .service('ApiService',
         function($http, $log, $q, $resource, appConstants) {
 

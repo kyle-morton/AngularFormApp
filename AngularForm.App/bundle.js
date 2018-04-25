@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('AngularFormApp', ['ui.router', 'ngResource']) 
+angular.module('AngularFormApp', ['ui.router', 'ngResource',
+    'ServicesModule', 'ConstantsModule', 'FormModule', 'HomeModule', 'NavBarModule', 'NavButtonModule', 'StatusSummaryModule']) 
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, appConstants, formConstants) {
 
         $urlRouterProvider.otherwise('/home');
@@ -125,16 +126,44 @@ angular.module('AngularFormApp', ['ui.router', 'ngResource'])
         //$locationProvider.html5Mode(true);
 
     });
-angular.module('AngularFormApp')
-    .constant('appConstants', {
-        API_BASE: 'http://localhost:61109/api',
-        LOGIN_URI: '/authenticateUser',
-        HOME: {
-            KEY: 'home'
-        }
-    });
+angular.module('ServicesModule', [])
+    .service('AlertService', function () {
 
-angular.module('AngularFormApp')
+        //var alertService = {};
+
+        //alertService.success = function (title, message) {
+        //    return alertService.displayMessage(title, message, "success");
+        //}
+        //alertService.error = function(title, message) {
+        //    return alertService.displayMessage(title, message, "error");
+        //}
+        //alertService.displayMessage = function(title, message, type) {
+        //    return swal(title, message, type);
+        //}
+
+        return {
+            displayMessage: function (title, message, type) {
+                return swal(title, message, type);
+            },
+            success: function (title, message) {
+                return this.displayMessage(title, message, "success");
+            },
+            error: function (title, message) {
+                return this.displayMessage(title, message, "error");
+            },
+            prompt: function(title, message) {
+                return swal({
+                    title: title,
+                    text: message,
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                });
+            }
+
+        };
+    });
+angular.module('ServicesModule')
     .service('StorageService', function ($window) {
 
         this.getItem = function(key) {
@@ -148,7 +177,7 @@ angular.module('AngularFormApp')
         }
 
     });
-angular.module('AngularFormApp')
+angular.module('ServicesModule')
     .service('ApiService',
         function($http, $log, $q, $resource, appConstants) {
 
@@ -249,23 +278,16 @@ angular.module('AngularFormApp')
                 }
             };
     });
-angular.module('AngularFormApp')
-    .service('AlertService', function () {
-
-        var alertService = {};
-        alertService.success = function (title, message) {
-            return alertService.displayMessage(title, message, "success");
+angular.module('ConstantsModule', [])
+    .constant('appConstants', {
+        API_BASE: 'http://localhost:61109/api',
+        LOGIN_URI: '/authenticateUser',
+        HOME: {
+            KEY: 'home'
         }
-        alertService.error = function(title, message) {
-            return alertService.displayMessage(title, message, "error");
-        }
-        alertService.displayMessage = function(title, message, type) {
-            return swal(title, message, type);
-        }
-
-        return alertService;
     });
-angular.module('AngularFormApp')
+
+angular.module('FormModule', [])
     .service('formService', function (formConstants, ApiService) {
 
         var formService = {};
@@ -281,8 +303,8 @@ angular.module('AngularFormApp')
         formService.get = function(id) {
 
         }
-        formService.getAll = function(callback) {
-            return ApiService.get(formConstants.API.GET_ALL, {})
+        formService.getActive = function(callback) {
+            return ApiService.get(formConstants.API.GET_ACTIVE, {})
             .then(function successCallback(response) {
                     callback(response.data);
                 }, function errorCallback(response) {
@@ -292,8 +314,9 @@ angular.module('AngularFormApp')
         formService.delete = function (id, callback) {
 
             return ApiService.remove(formConstants.API.DELETE, {id})
-                .then(function successCallback(response) {
-                    callback(response.data);
+                .then(
+                function successCallback(response) {
+                    callback(response);
                 }, function errorCallback(response) {
                     callback(false);
                 });
@@ -301,7 +324,7 @@ angular.module('AngularFormApp')
 
         return formService;
     });
-angular.module('AngularFormApp')
+angular.module('FormModule')
     .service('formNavigationService', function (formConstants, $state) {
 
         this.isStart = function () {
@@ -333,7 +356,7 @@ angular.module('AngularFormApp')
         }
 
     });
-angular.module('AngularFormApp')
+angular.module('FormModule')
     .constant('formConstants', {
         STEP_KEY: 'formStep',
         FORM_KEY: 'formState',
@@ -618,12 +641,13 @@ angular.module('AngularFormApp')
         API: {
             SUBMIT: '/form/Submit',
             GET_ALL: '/form/getall',
+            GET_ACTIVE: '/form/getactive',
             GET: 'form/get',
             DELETE: '/form/delete'
         }
     });
 
-angular.module('AngularFormApp')
+angular.module('StatusSummaryModule', [])
     .controller('StatusSummaryController', function ($scope, $state, appConstants, formConstants) {
 
         console.log('statusSummary init...');
@@ -641,13 +665,13 @@ angular.module('AngularFormApp')
         $scope.statusString = statusString;
 
     });
-angular.module('AngularFormApp')
+angular.module('NavButtonModule', [])
     .controller('NavButtonsController', function ($scope, $state, appConstants) {
 
         console.log('navbuttons init...');
 
     });
-angular.module('AngularFormApp')
+angular.module('NavBarModule', [])
     .controller('NavBarController', function ($scope, $state, appConstants, formConstants) {
 
         var currentState = $state.current.name;
@@ -668,7 +692,7 @@ angular.module('AngularFormApp')
         };
 
     });
-angular.module('AngularFormApp')
+angular.module('HomeModule', [])
     .controller('HomeController', function ($scope) {
 
         $scope.errorMessage = "";
@@ -678,7 +702,7 @@ angular.module('AngularFormApp')
         console.log('home initialized...');
 
     });
-angular.module('AngularFormApp')
+angular.module('FormModule')
     .controller('FormController',
     function ($scope, $state, formConstants, StorageService, AlertService, formNavigationService, formService) {
 
@@ -740,14 +764,14 @@ angular.module('AngularFormApp')
         }
 
     });
-angular.module('AngularFormApp')
+angular.module('FormModule')
     .controller('FormListController', function ($scope, appConstants, formService, AlertService) {
 
         $scope.forms = [];
         $scope.isLoading = false;
         $scope.getForms = function () {
             $scope.isLoading = true;
-            formService.getAll(function (response) {
+            formService.getActive(function (response) {
                 if (response) {
                     $scope.forms = response;
                 } else {
@@ -762,22 +786,21 @@ angular.module('AngularFormApp')
 
 
         }
-        $scope.delete = function(form) {
-            console.log('deleting: ' + form.Id);
+        $scope.delete = function (form) {
 
-            formService.delete(form.Id, function(response) {
-                if (response) {
-
-                    AlertService.success("Form saved!", "Thanks for your submission!")
-                        .then(function () {
-                            //remove from scope array...
-                        });
-                } else {
-
+            AlertService.prompt('Are you sure?')
+            .then(function(choice) {
+              
+                if (choice) {
+                    formService.delete(form.Id, function (response) {
+                        if (response) {
+                            $scope.getForms();
+                        }
+                    });
                 }
 
-            });
 
+            });
         }
 
         $scope.getForms();

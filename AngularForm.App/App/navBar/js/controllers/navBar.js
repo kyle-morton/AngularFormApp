@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('NavBarModule', [])
     .controller('NavBarController', function ($scope, $state, appConstants, formConstants) {
 
         var currentState = $state.current.name;

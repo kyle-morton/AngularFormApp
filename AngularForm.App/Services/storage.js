@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('ServicesModule')
     .service('StorageService', function ($window) {
 
         this.getItem = function(key) {

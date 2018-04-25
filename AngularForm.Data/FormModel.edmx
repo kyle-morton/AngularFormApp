@@ -41,6 +41,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MiscInformation">
           <Key>
@@ -253,6 +254,7 @@
           <NavigationProperty Name="MiscInformation" Relationship="FormModel.FK_MiscInformation_Form" FromRole="Form" ToRole="MiscInformation" />
           <NavigationProperty Name="Person" Relationship="FormModel.FK_Person_Form" FromRole="Form" ToRole="Person" />
           <NavigationProperty Name="References" Relationship="FormModel.FK_Reference_Form" FromRole="Form" ToRole="Reference" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MiscInformation">
           <Key>
@@ -394,6 +396,7 @@
           <EntitySetMapping Name="Forms">
             <EntityTypeMapping TypeName="FormModel.Form">
               <MappingFragment StoreEntitySet="Form">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

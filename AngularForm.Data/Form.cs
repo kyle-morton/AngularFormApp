@@ -24,6 +24,7 @@ namespace AngularForm.Data
         public System.Guid Id { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime ModifyDate { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual Education Education { get; set; }

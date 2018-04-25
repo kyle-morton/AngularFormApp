@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('HomeModule', [])
     .controller('HomeController', function ($scope) {
 
         $scope.errorMessage = "";

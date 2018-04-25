@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('FormModule')
     .constant('formConstants', {
         STEP_KEY: 'formStep',
         FORM_KEY: 'formState',
@@ -283,6 +283,7 @@
         API: {
             SUBMIT: '/form/Submit',
             GET_ALL: '/form/getall',
+            GET_ACTIVE: '/form/getactive',
             GET: 'form/get',
             DELETE: '/form/delete'
         }

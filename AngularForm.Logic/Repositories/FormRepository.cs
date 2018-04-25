@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -26,8 +27,11 @@ namespace AngularForm.Logic.Repositories
 
         public override void Delete(Guid id)
         {
-            var form = new Form {Id = id};
-            dbContext.Entry(form).State = EntityState.Deleted;
+            var form = Get(id);
+            if (form == null)
+                return;
+            form.IsActive = false;
+            dbContext.Entry(form).State = EntityState.Modified;
             Save();
         }
 

@@ -3,10 +3,10 @@
     "outputFileName": "bundle.js",
     "inputFiles": [
       "app.js",
-      "Constants/constants.js",
+      "Services/alert.js",
       "Services/storage.js",
       "Services/api.js",
-      "Services/alert.js",
+      "Constants/constants.js",
       "App/form/js/services/form.js",
       "App/form/js/services/formNavigation.js",
       "App/form/js/constants/formConstants.js",

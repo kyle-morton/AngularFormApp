@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('StatusSummaryModule', [])
     .controller('StatusSummaryController', function ($scope, $state, appConstants, formConstants) {
 
         console.log('statusSummary init...');

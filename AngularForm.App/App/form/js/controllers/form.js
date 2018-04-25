@@ -1,4 +1,4 @@
-﻿angular.module('AngularFormApp')
+﻿angular.module('FormModule')
     .controller('FormController',
     function ($scope, $state, formConstants, StorageService, AlertService, formNavigationService, formService) {
 
